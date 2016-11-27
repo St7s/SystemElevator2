@@ -189,7 +189,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		else if(sens == Sens.UP){
 			this.setEtat(Etat.DEPLACEMENT);
 			this.getMoteur().marche(Sens.UP);
-			deplacement(sens);//
+			deplacement(sens);
 		}
 	}
 	/*
