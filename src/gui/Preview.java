@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -57,6 +56,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	private JTextField txtVitesseMoteur;
 	private JLabel lblDistanceNiveaux;
 	private JTextField textField;
+	private static JLabel time;
 	/*
 	 * =========================================================== 
 	 * Constructeur
@@ -98,33 +98,42 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		lblSurcharge.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSurcharge.setFont(new Font("Comic Sans MS", lblSurcharge.getFont().getStyle() | Font.BOLD, 22));
 		lblSurcharge.setForeground(new Color(255, 0, 0));
+		
+		time = new JLabel("0");
+		time.setFont(new Font("Comic Sans MS", time.getFont().getStyle() & ~Font.BOLD, 15));
+		time.setForeground(new Color(0, 255, 127));
 
 		GroupLayout gl_rightPanel = new GroupLayout(rightPanel);
 		gl_rightPanel.setHorizontalGroup(
-				gl_rightPanel.createParallelGroup(Alignment.LEADING)
+			gl_rightPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rightPanel.createSequentialGroup()
-						.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_rightPanel.createSequentialGroup()
-										.addGap(111)
-										.addGroup(gl_rightPanel.createParallelGroup(Alignment.TRAILING, false)
-												.addComponent(lblNiveau, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(lblEtageActuel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-								.addGroup(gl_rightPanel.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(lblSurcharge, GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)))
-						.addContainerGap())
-				);
+					.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_rightPanel.createSequentialGroup()
+							.addGap(111)
+							.addGroup(gl_rightPanel.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblNiveau, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblEtageActuel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addGroup(gl_rightPanel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblSurcharge, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
+						.addGroup(gl_rightPanel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(time, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
 		gl_rightPanel.setVerticalGroup(
-				gl_rightPanel.createParallelGroup(Alignment.LEADING)
+			gl_rightPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rightPanel.createSequentialGroup()
-						.addGap(5)
-						.addComponent(lblEtageActuel)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblNiveau)
-						.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
-						.addComponent(lblSurcharge, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addGap(94))
-				);
+					.addGap(5)
+					.addComponent(lblEtageActuel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNiveau)
+					.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+					.addComponent(lblSurcharge, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addGap(59)
+					.addComponent(time, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		rightPanel.setLayout(gl_rightPanel);
 
 		this.setContentPane(contentPane);
@@ -296,9 +305,10 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		ObserverSurcharge ObserverSurcharge = new ObserverSurchargeDummy();
 		sa.addObserverSurcharge(ObserverSurcharge);
 
-		long t = 1;
+		long t = 0;
 		for (int i = 0; i < listeCommandes.size(); i++) {
 			sa.trigger(t);
+			time.setText(t+"ms");
 			sa.commande(listeCommandes.get(i));
 			Thread.sleep(1000);
 			t+=1000;

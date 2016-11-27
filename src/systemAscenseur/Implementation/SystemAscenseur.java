@@ -140,7 +140,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 			deplacement = deplacement * -1;
 		positionApresMouvement = this.getMoteur().getCabine().getPosition()+deplacement;
 		this.getMoteur().getCabine().setPosition(positionApresMouvement);
-		int niveauAsc = this.capteurNiveau.detecter(this.niveauMax, positionApresMouvement, this.distanceNiveaux);
+		int niveauAsc = this.capteurNiveau.detecter(this.niveauMax, positionApresMouvement, this.distanceNiveaux, this.getMoteur().getVitesse());
 
 		System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition());
 		if(niveauAsc != -1 && niveauAsc != this.position){
