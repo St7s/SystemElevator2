@@ -55,12 +55,12 @@ public class preview extends JFrame {
 
 		leftPanel = new JPanel();
 		leftPanel.setBackground(new Color(176, 196, 222));
-		leftPanel.setBounds(10, 11, 254, 345);
+		leftPanel.setBounds(10, 11, 287, 345);
 		
 		
 		rightPanel = new JPanel();
 		rightPanel.setBackground(new Color(105, 105, 105));
-		rightPanel.setBounds(268, 11, 405, 345);
+		rightPanel.setBounds(307, 11, 366, 345);
 		
 		contentPane.add(leftPanel);
 		contentPane.add(rightPanel);
@@ -68,60 +68,59 @@ public class preview extends JFrame {
 		this.setContentPane(contentPane);
 
 		//Initialize components
-		lblFichierDemandes = new JLabel("Fichier demandes :");
+		lblFichierDemandes = new JLabel("Selectioner un fichier flow :");
 		txtEtageMin = new JTextField(2);
 		txtEtageMax = new JTextField(2);
 		btnStart = new JButton("DEMARER");
-		btnSelectFile = new JButton("SELECT");
-		lblNumeroEtageMin =  new JLabel("Numero etage min : ");
+		btnSelectFile = new JButton("CHOISIR");
+		lblNumeroEtageMin =  new JLabel("Etage min : ");
 		fichierChoisi = new JLabel("Aucun fichier choisi...");
-		lblNumeroEtageMax = new JLabel("Numero etage min : ");
+		lblNumeroEtageMax = new JLabel("Etage max : ");
 
 		
-		fichierChoisi.setHorizontalAlignment(SwingConstants.CENTER);
+		fichierChoisi.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		
 		
 		GroupLayout gl_panel = new GroupLayout(leftPanel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(45)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNumeroEtageMax, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(txtEtageMax, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
 							.addComponent(lblFichierDemandes)
-							.addGap(5)
+							.addGap(29)
 							.addComponent(btnSelectFile))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblNumeroEtageMin)
-							.addGap(18)
-							.addComponent(txtEtageMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(45, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-					.addContainerGap(18, Short.MAX_VALUE)
-					.addComponent(fichierChoisi, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap()
+							.addComponent(fichierChoisi, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))
 					.addContainerGap())
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(81)
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lblNumeroEtageMin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblNumeroEtageMax, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(txtEtageMax)
+						.addComponent(txtEtageMin, GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+					.addContainerGap(135, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addGap(105)
 					.addComponent(btnStart)
-					.addContainerGap(92, Short.MAX_VALUE))
+					.addContainerGap(111, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(4)
-							.addComponent(lblFichierDemandes))
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFichierDemandes)
 						.addComponent(btnSelectFile))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(18)
 					.addComponent(fichierChoisi)
-					.addGap(52)
+					.addGap(26)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumeroEtageMin)
 						.addComponent(txtEtageMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -129,9 +128,9 @@ public class preview extends JFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumeroEtageMax)
 						.addComponent(txtEtageMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(60)
+					.addGap(167)
 					.addComponent(btnStart)
-					.addGap(108))
+					.addContainerGap())
 		);
 		leftPanel.setLayout(gl_panel);
 		/*
