@@ -29,7 +29,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	private ArrayList<ObserverNiveau> observersNiveau;
 	private ArrayList<ObserverSurcharge> observersSurcharge;
 
-	public ArrayList<Sens> test = new ArrayList<Sens>();
+	//public ArrayList<Sens> test = new ArrayList<Sens>();
 	
 	/*
 	 * =========================================================== 
@@ -95,7 +95,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		this.setObserversArret(new ArrayList<ObserverArret>());
 		this.setObserversNiveau(new ArrayList<ObserverNiveau>());
 		this.setObserversSurcharge(new ArrayList<ObserverSurcharge>());
-		
+		/*
 		test.add(Sens.UP);
 		test.add(Sens.UP);
 		test.add(Sens.UP);
@@ -106,7 +106,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		
 		test.add(Sens.DOWN);
 		test.add(Sens.DOWN);
-		test.add(Sens.DOWN);
+		test.add(Sens.DOWN);*/
 	}
 
 	/*
@@ -144,6 +144,9 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		this.getMoteur().getCabine().setPosition(positionApresMouvement);
 		int niveauAsc = this.capteurNiveau.detecter(this.niveauMax, positionApresMouvement, this.distanceNiveaux);
 		
+		
+		this.notifyAllNiveau();//DEBUG
+		System.out.println("deplacement:"+niveauAsc);//DEBUG
 		if(niveauAsc != -1 && niveauAsc != this.position){
 			this.position = niveauAsc;
 			System.out.println("niveau : " +this.position);
@@ -170,6 +173,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 */
 	@Override
 	public void commande(Sens sens) {
+		System.out.println(sens);
 		//Demande d'arret
 		if (sens == null){
 			if(this.getEtat() == Etat.DEPLACEMENT)
@@ -211,8 +215,8 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	@Override
 	public void trigger(long t) {
 		this.miseAjourTemps(t);
-		this.commande(test.get(0));
-		test.remove(0);
+		//this.commande(test.get(0));
+		//test.remove(0);
 		/*for (ObserverNiveau observerNiveau : this.observersNiveau) {
 			observerNiveau.notifierNiveau(this.position);
 		}*/
