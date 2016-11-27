@@ -112,6 +112,14 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		for (ObserverNiveau observerNiveau : observersNiveau)
 			observerNiveau.notifierNiveau(this.position);
 	}
+	
+	/**
+	 * Notifier tout les observeur d'arret de la position actuelle ou l'ascenseur s'arrete
+	 */
+	public void notifyAllArret(){
+		for (ObserverArret observerArret : observersArret)
+			observerArret.notifierArret(this.position);
+	}
 
 	/**
 	 * Mettre a jour les variables de temps
@@ -140,14 +148,16 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 			deplacement = deplacement * -1;
 		positionApresMouvement = this.getMoteur().getCabine().getPosition()+deplacement;
 		this.getMoteur().getCabine().setPosition(positionApresMouvement);
-		int niveauAsc = this.capteurNiveau.detecter(this.niveauMax, positionApresMouvement, this.distanceNiveaux, this.getMoteur().getVitesse());
+		int niveauAsc = this.capteurNiveau.detecter(this.niveauMin, this.niveauMax, positionApresMouvement, this.distanceNiveaux);
 
-		System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition());
 		if(niveauAsc != -1 && niveauAsc != this.position){
 			this.setPosition(niveauAsc);
 		}
-		this.sensDeplacement = sens;
 		
+		System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition() + " metres ou "+this.getMoteur().getCabine().getPosition()/this.getDistanceNiveaux() );
+		System.out.println("position ascenseur : "+ this.getPosition());
+		
+		this.sensDeplacement = sens;
 	}
 
 	private void ouverturePorte() {

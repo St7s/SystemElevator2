@@ -22,6 +22,7 @@ public class SimulationTrigger {
 		listeCommandes.add(Sens.UP);
 		listeCommandes.add(Sens.UP);
 		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
 		
 		listeCommandes.add(null);
 		listeCommandes.add(null);

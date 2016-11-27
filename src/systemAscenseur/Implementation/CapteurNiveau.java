@@ -38,13 +38,15 @@ class CapteurNiveau {
 	 * Methode
 	 * ===========================================================
 	 */
-	public int detecter(int nbrNiveaux, float positionActuelle,float distancesCapteurs, float vitesse){
+	public int detecter(int niveauMin, int niveauMax, float positionActuelle, float distancesCapteurs){
 		float distanceVersEtage;
-		for (int niveau = 0; niveau < nbrNiveaux; niveau++){
-			distanceVersEtage = positionActuelle - (distancesCapteurs * niveau);
-			if(distanceVersEtage <= vitesse && distanceVersEtage >= -vitesse)
+		//on test pour tous les niveaux
+		for (int niveau = niveauMin; niveau < niveauMax; niveau++){
+			distanceVersEtage = positionActuelle - (distancesCapteurs * niveau);//calcule de la distance 
+			if(distanceVersEtage <= 0.5f*distancesCapteurs && 0 <= distanceVersEtage){  //equivalent à un demi-étage supérieur
 				return niveau;
+			}
 		}
-		return -1;
+		return niveauMin-1;
 	}
 }
