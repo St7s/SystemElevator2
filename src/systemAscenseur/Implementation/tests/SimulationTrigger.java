@@ -13,28 +13,31 @@ public class SimulationTrigger {
 	public static void main(String[] args) throws InterruptedException {
 		
 		/**Configuration du SystemAscenseur**/
-		float vitesseMoteur = 1;
+		float vitesseMoteur = (float) 1.1;
 		int niveauMin = 0;
 		int niveauMax = 10;
 		float distanceNiveaux = 3;
 		
-		ArrayList<Sens> test = new ArrayList<Sens>();
-		test.add(Sens.UP);
-		test.add(Sens.UP);
-		test.add(Sens.UP);
+		ArrayList<Sens> listeCommandes = new ArrayList<Sens>();
+		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
 		
-		test.add(Sens.UP);
-		test.add(Sens.UP);
-		test.add(Sens.UP);
+		listeCommandes.add(null);
+		listeCommandes.add(null);
+		listeCommandes.add(null);
 		
-		//test.add(null);
+		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
 		
-		test.add(Sens.DOWN);
-		test.add(Sens.DOWN);
-		test.add(Sens.DOWN);
-		
-		
-		
+		listeCommandes.add(Sens.DOWN);
+		listeCommandes.add(Sens.DOWN);
+		listeCommandes.add(Sens.DOWN);
+				
+		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
+		listeCommandes.add(Sens.UP);
 		
 		//On cree le systemeAscenseur
 		ISystemAscenseur sa = systemAscenseur.Interface.SystemAscenseurFactory.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux);
@@ -48,10 +51,13 @@ public class SimulationTrigger {
 		ObserverSurcharge ObserverSurcharge = new ObserverSurchargeDummy();
 		sa.addObserverSurcharge(ObserverSurcharge);
 		
-
-		for (int i = 0; i < test.size(); i++) {
-			sa.commande(test.get(i));
-			Thread.sleep(1000);
+		long t = 1;
+		for (int i = 0; i < listeCommandes.size(); i++) {
+			
+			sa.trigger(t);
+			sa.commande(listeCommandes.get(i));
+			//Thread.sleep(1000);
+			t+=1000;
 		}
 
 	}

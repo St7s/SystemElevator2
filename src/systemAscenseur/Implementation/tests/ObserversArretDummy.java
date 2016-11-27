@@ -7,7 +7,6 @@ public class ObserversArretDummy implements ObserverArret{
 	@Override
 	public void notifierArret(int niveau) {
 		System.out.println("notifierArret : "+niveau);
-		
 	}
 
 }

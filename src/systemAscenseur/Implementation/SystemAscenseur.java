@@ -20,6 +20,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	private int niveauMin;
 	private int position;
 	private Etat etat;
+	private Sens sensDeplacement;
 	private Moteur moteur;
 	private CapteurNiveau capteurNiveau;
 	private float distanceNiveaux;
@@ -29,8 +30,6 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	private ArrayList<ObserverNiveau> observersNiveau;
 	private ArrayList<ObserverSurcharge> observersSurcharge;
 
-	//public ArrayList<Sens> test = new ArrayList<Sens>();
-	
 	/*
 	 * =========================================================== 
 	 * Getters - Setters
@@ -40,7 +39,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	public void setNiveauMax(int niveauMax) {this.niveauMax = niveauMax;}
 
 	public int getPosition() {return position;}
-	public void setPosition(int position) {this.position = position;}
+	public void setPosition(int position) {this.position = position;this.notifyAllNiveau();}
 
 	public int getNiveauMin() {return niveauMin;}
 	public void setNiveauMin(int niveauMin) {this.niveauMin = niveauMin;}
@@ -50,6 +49,9 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 
 	public Moteur getMoteur() {return moteur;}
 	public void setMoteur(Moteur moteur) {this.moteur = moteur;}
+
+	public Sens getSensDeplacementCourant() {return sensDeplacement;}
+	public void setSensDeplacementCourant(Sens sensDeplacementCourant) {this.sensDeplacement = sensDeplacementCourant;}
 
 	public CapteurNiveau getCapteurniveau() {return capteurNiveau;}
 	public void setCapteurniveau(CapteurNiveau capteurniveau) {this.capteurNiveau = capteurniveau;}
@@ -86,27 +88,16 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		this.niveauMax = niveauMax;
 		this.position = 0;
 		this.etat = Etat.REPOS;
+		this.sensDeplacement = null;
 		this.moteur = moteur;
 		this.distanceNiveaux = distanceNiveaux;
 		this.capteurNiveau = capteurNiveau;
-		this.time1 = 0;
+		this.time1 = -1;
 		this.time2 = 0;
-		
+
 		this.setObserversArret(new ArrayList<ObserverArret>());
 		this.setObserversNiveau(new ArrayList<ObserverNiveau>());
 		this.setObserversSurcharge(new ArrayList<ObserverSurcharge>());
-		/*
-		test.add(Sens.UP);
-		test.add(Sens.UP);
-		test.add(Sens.UP);
-		
-		test.add(Sens.UP);
-		test.add(Sens.UP);
-		test.add(Sens.UP);
-		
-		test.add(Sens.DOWN);
-		test.add(Sens.DOWN);
-		test.add(Sens.DOWN);*/
 	}
 
 	/*
@@ -121,14 +112,19 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		for (ObserverNiveau observerNiveau : observersNiveau)
 			observerNiveau.notifierNiveau(this.position);
 	}
-	
+
 	/**
 	 * Mettre a jour les variables de temps
 	 * @param temps
 	 */
 	private void miseAjourTemps(long temps){
-		this.time1 = this.time2;
-		this.time2 = temps; 
+		if(time1 == -1){
+			time1 = temps;
+			time2 = time1;
+		}else{	
+			this.time1 = this.time2;
+			this.time2 = temps;
+		}
 	}
 
 	/**
@@ -136,22 +132,22 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * @param sens
 	 */
 	private void deplacement(Sens sens) {
-		float positionAvantMouvement = this.getMoteur().getCabine().position;
 		long tempsEcoule = this.time2 - this.time1;
 		float vitesse = this.getMoteur().getVitesse();
 		float deplacement = (vitesse*tempsEcoule)/1000;
-		float positionApresMouvement = (sens == Sens.UP)?positionAvantMouvement+deplacement:positionAvantMouvement-deplacement;
+		float positionApresMouvement = 0;
+		if(this.sensDeplacement == Sens.DOWN)
+			deplacement = deplacement * -1;
+		positionApresMouvement = this.getMoteur().getCabine().getPosition()+deplacement;
 		this.getMoteur().getCabine().setPosition(positionApresMouvement);
 		int niveauAsc = this.capteurNiveau.detecter(this.niveauMax, positionApresMouvement, this.distanceNiveaux);
-		
-		
-		this.notifyAllNiveau();//DEBUG
-		System.out.println("deplacement:"+niveauAsc);//DEBUG
+
+		System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition());
 		if(niveauAsc != -1 && niveauAsc != this.position){
-			this.position = niveauAsc;
-			System.out.println("niveau : " +this.position);
-			this.notifyAllNiveau();
+			this.setPosition(niveauAsc);
 		}
+		this.sensDeplacement = sens;
+		
 	}
 
 	private void ouverturePorte() {
@@ -172,8 +168,9 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * @param sens
 	 */
 	@Override
-	public void commande(Sens sens) {
-		System.out.println(sens);
+	public void commande(Sens sens) {		
+		System.out.println("\n======================================\n"
+				+ "Reception de commande : " + sens + "("+this.getMoteur().getCabine().getPosition()+")");
 		//Demande d'arret
 		if (sens == null){
 			if(this.getEtat() == Etat.DEPLACEMENT)
@@ -211,7 +208,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * Methodes Event 
 	 * ===========================================================
 	 */
-	
+
 	@Override
 	public void trigger(long t) {
 		this.miseAjourTemps(t);
