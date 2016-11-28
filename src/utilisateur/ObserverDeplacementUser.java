@@ -1,5 +1,5 @@
 package utilisateur;
 
-public interface ObserverDeplacement {
+public interface ObserverDeplacementUser {
 public void deplacement(int niveau);
 }

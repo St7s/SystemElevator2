@@ -1,13 +1,13 @@
 package systemSimulation.Implementation;
-import interfaceUtilisateur.Implementation.IintefaceUtilisateur;
+import interfaceUtilisateur.Interface.IintefaceUtilisateur;
 import interfaceUtilisateur.Interface.SystemIUFactory;
 import sequenceur.Interface.ISequencer;
 import sequenceur.Interface.SequenceurFactory;
 import systemAscenseur.Interface.ISystemAscenseur;
 import systemAscenseur.Interface.ObserverNiveau;
 import systemControl.Interface.ISystemControl;
-import utilisateur.ObserverAppel;
-import utilisateur.ObserverDeplacement;
+import utilisateur.ObserverAppelUser;
+import utilisateur.ObserverDeplacementUser;
 
 class Configurator {
 
@@ -51,24 +51,28 @@ class Configurator {
 
 		seq.addProcess(sa,12);
 
-		IintefaceUtilisateur ui = SystemIUFactory.getInstance();
-		
+		IintefaceUtilisateur ui = SystemIUFactory.createInstance();
+		ui.link(sysControle);
 		//On cree le Flow
 		Flow flow = Flow.creatFlow();
 		
 		//On initialise les utilisateurs systeme a partir d un fichier flow
-		flow.addFichier("testFlow");
+		flow.addFichier("users");
 		
 		//On ratache l'interface Utilisateur aux utilisateurs
-		flow.addObserveurDeplacement((ObserverDeplacement) ui);
+		flow.addObserveurDeplacement((ObserverDeplacementUser) ui);
 		
 		//On ratache l'interface Utilisateur aux utilisateurs
-		flow.addObserveurAppel((ObserverAppel) ui);
+		flow.addObserveurAppel((ObserverAppelUser) ui);
 
-		
+		ui.addObserverArret(flow);
+		ui.addObserverSurcharge(flow);
 		//On demande au systemControle d'observer le niveau du systemAscenseur
 		sa.addObserverNiveau((ObserverNiveau) sysControle);
-
+		sa.addObserverNiveau(ui);
+		sa.addObserverArret(ui);
+		sa.addObserverSurcharge(ui);
+		seq.addProcess(flow,12);
 		seq.start();
 
 	} 

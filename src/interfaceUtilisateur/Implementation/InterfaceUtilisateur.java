@@ -1,6 +1,7 @@
 package interfaceUtilisateur.Implementation;
 import java.util.ArrayList;
 
+import interfaceUtilisateur.Interface.IintefaceUtilisateur;
 import interfaceUtilisateur.Interface.ObservableIU;
 import interfaceUtilisateur.Interface.ObserverArretIU;
 import interfaceUtilisateur.Interface.ObserverSurchargeIU;
@@ -43,14 +44,6 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 	public void setDisplay_pos(int display_pos) {
 		this.display_pos = display_pos;
 	}
-
-	public IU_SC getSystemeControle() {
-		return systemeControle;
-	}
-
-	public void setSystemeControle(IU_SC systemeControle) {
-		this.systemeControle = systemeControle;
-	}
 	/*
 	 * =========================================================== 
 	 * Constructeur
@@ -76,7 +69,7 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 		this.systemeControle.appel(niveau, null);
 	}
 
-	public void deplacement(int niveau){}
+	
 
 	public void monterAscenseur(){}
 
@@ -123,6 +116,19 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 
 	@Override
 	public void appel(int niveau, Sens sens) {
+		System.out.println("Appel :"+niveau);
 		this.emettreAppel(sens, niveau);
+	}
+
+	@Override
+	public void deplacement(int niveau) {
+		// TODO Auto-generated method stub
+		System.out.println("Deplacement :"+niveau);
+		this.systemeControle.deplacement(niveau);
+	}
+	@Override
+	public void link(IU_SC cn)
+	{
+		this.systemeControle = cn;
 	}
 }

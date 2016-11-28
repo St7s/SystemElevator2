@@ -1,8 +1,8 @@
 package utilisateur;
 
 public interface ObersvableUser {
-public void addObserverAppel(ObserverAppel oa);
-public void addObserverDeplacement(ObserverDeplacement od);
+public void addObserverAppel(ObserverAppelUser oa);
+public void addObserverDeplacement(ObserverDeplacementUser od);
 public void addObserverEntre(ObserverEntree oa);
 public void addObserverSortie(ObserverSortie od);
 public void appel();

@@ -7,35 +7,35 @@ import java.util.ArrayList;
 import interfaceUtilisateur.Interface.ObserverArretIU;
 import interfaceUtilisateur.Interface.ObserverSurchargeIU;
 import sequenceur.Interface.Event;
-import utilisateur.ObserverAppel;
-import utilisateur.ObserverDeplacement;
+import utilisateur.ObserverAppelUser;
+import utilisateur.ObserverDeplacementUser;
 
 class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	/**
 	 * 
 	 */
-	private ObserverAppel oa;
+	private ObserverAppelUser oa;
 	/**
 	 * 
 	 */
-	private ObserverDeplacement od;
+	private ObserverDeplacementUser od;
 	/**
 	 * instance_Flow de flow, singleton
 	 */
 	private static Flow instance_Flow;
-	public ObserverAppel getObserverAppel() {
+	public ObserverAppelUser getObserverAppel() {
 		return oa;
 	}
 
-	public void setObserverAppel(ObserverAppel oa) {
+	public void setObserverAppel(ObserverAppelUser oa) {
 		this.oa = oa;
 	}
 
-	public ObserverDeplacement getObserverDeplacement() {
+	public ObserverDeplacementUser getObserverDeplacement() {
 		return od;
 	}
 
-	public void setObserverDeplacement(ObserverDeplacement od) {
+	public void setObserverDeplacement(ObserverDeplacementUser od) {
 		this.od = od;
 	}
 
@@ -104,14 +104,14 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 		users.add(user);
 	}
 
-	public void addObserveurAppel(ObserverAppel observerAppel)
+	public void addObserveurAppel(ObserverAppelUser observerAppel)
 	{
 		this.setObserverAppel(observerAppel);
 		for (UserSimulation userSimulation : users) 
 			userSimulation.addObserverAppel(observerAppel);
 	}
 
-	public void addObserveurDeplacement(ObserverDeplacement observateurDeplacement)
+	public void addObserveurDeplacement(ObserverDeplacementUser observateurDeplacement)
 	{
 		this.setObserverDeplacement(observateurDeplacement);
 		for (UserSimulation userSimulation : users)
@@ -132,6 +132,10 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	private Flow()
 	{
 		users = new ArrayList<UserSimulation>();
+		usersAppel = new ArrayList<UserSimulation>();
+		usersInAscenseur = new ArrayList<UserSimulation>();
+
+		usersHappy = new  ArrayList<UserSimulation>();
 	}
 
 	/**
@@ -149,6 +153,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 		while(ligne != null) {
 			ligne2 = ligne.split(" ");
 			this.addUser(new UserSimulation(ligne2[0], Integer.parseInt(ligne2[1]) , Integer.parseInt(ligne2[2]))); 
+			ligne = entree.readLine();
 		}
 		entree.close();
 	}
@@ -166,8 +171,8 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	@Override
 	public void trigger(long t) {
 
-		UserSimulation usr1 = users.get(0);
-		if (usr1 != null) {
+		if (users.size() != 0) {
+			UserSimulation usr1 = users.get(0);
 			usr1.setTempsAppel(t);
 			usr1.appel();
 			usersAppel.add(usr1);
@@ -184,6 +189,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	@Override
 	public void arret(int niveau) {
 
+		System.out.println("Arret ");
 		// a changer
 		long t = Configurator.seq.SimulationTime();
 		//

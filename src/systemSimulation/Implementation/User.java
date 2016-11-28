@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import systemAscenseur.Implementation.Sens;
 import utilisateur.IUser;
-import utilisateur.ObserverAppel;
-import utilisateur.ObserverDeplacement;
+import utilisateur.ObserverAppelUser;
+import utilisateur.ObserverDeplacementUser;
 import utilisateur.ObserverEntree;
 import utilisateur.ObserverSortie;
   class User implements IUser{
-	private ArrayList<ObserverAppel> oa; 
-	private ArrayList<ObserverDeplacement> od; 
+	private ArrayList<ObserverAppelUser> oa; 
+	private ArrayList<ObserverDeplacementUser> od; 
 	private ArrayList<ObserverEntree> oe; 
 	private ArrayList<ObserverSortie> os; 
 	/**
@@ -88,23 +88,27 @@ import utilisateur.ObserverSortie;
 		setNom(nom);
 		setNiveau_initial(niveau_initial);
 		setNiveau_final(niveau_final);
-	 }
+		oa = new ArrayList<ObserverAppelUser>();
+		od = new ArrayList<ObserverDeplacementUser>() ;
+		oe = new ArrayList<ObserverEntree>(); 
+		os = new ArrayList<ObserverSortie>() ; 
+	}
 	@Override
-	public void addObserverAppel(ObserverAppel oa) {
+	public void addObserverAppel(ObserverAppelUser oa) {
 		this.oa.add(oa);
 	}
 	@Override
-	public void addObserverDeplacement(ObserverDeplacement od) {
+	public void addObserverDeplacement(ObserverDeplacementUser od) {
 		this.od.add(od);
 	}
 	@Override
 	public void appel(){
-		for(ObserverAppel o : this.oa)
+		for(ObserverAppelUser o : this.oa)
 			o.appel(this.niveau_initial, (this.niveau_initial-this.niveau_final > 0)?Sens.UP:Sens.DOWN);
 	}
 	@Override
 	public void deplacement() {
-		for(ObserverDeplacement o : this.od)
+		for(ObserverDeplacementUser o : this.od)
 			o.deplacement(this.niveau_final);
 	}
 	@Override
