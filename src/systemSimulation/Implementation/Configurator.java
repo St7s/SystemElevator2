@@ -47,6 +47,7 @@ import systemControl.Interface.ISystemControl;
 
 		seq.addProcess(sa,12);
 		
+	
 		//On demande au systemControle d'observer le niveau du systemAscenseur
 		sa.addObserverNiveau((ObserverNiveau) sysControle);
 

@@ -128,7 +128,9 @@ import utilisateur.ObserverDeplacement;
 		
 		
 		BufferedReader entree  = new BufferedReader(new FileReader(nom_fichier));
+		// premier ligne indique l'ordre des infos
 		String ligne = entree.readLine();
+		ligne = entree.readLine();
 		String[] ligne2;
 		users = new ArrayList<UserSimulation>();
 		while(ligne != null) {

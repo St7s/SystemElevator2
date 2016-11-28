@@ -82,15 +82,16 @@ import sequenceur.Interface.ISequencer;
 	@Override
 	public void start() throws Throwable{ 
 		long debut = System.currentTimeMillis();
-		while((System.currentTimeMillis() - debut) < getTemps_execution())
+		long tempsActuel;
+		while(((tempsActuel = System.currentTimeMillis()) - debut) < getTemps_execution())
 		{
 			for(Process processus : process)
 			{
-				if((System.currentTimeMillis() - processus.getLast_wake() )>= processus.getPeriode())
+				if((tempsActuel - processus.getLast_wake() )>= processus.getPeriode())
 				{
-					simulationTime = ((long) (temps_debut+ ((System.currentTimeMillis() - debut) * getCoefficient_temps())));
+					simulationTime = ((long) (temps_debut+ ((tempsActuel - debut) * getCoefficient_temps())));
 					processus.trigger(simulationTime);
-					processus.setLast_wake(System.currentTimeMillis());
+					processus.setLast_wake(tempsActuel);
 				}
 			}
 			Thread.sleep(1000);
