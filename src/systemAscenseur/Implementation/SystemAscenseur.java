@@ -134,6 +134,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	private void arretNiveau() {
 		this.moteur.arretImmediat();
 		this.ouverturePorte();
+		this.notifyAllArret();
 	}
 	/*
 	 * ===========================================================
