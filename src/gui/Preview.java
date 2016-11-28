@@ -317,15 +317,18 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		sysControle.appel(0, Sens.UP);
 		
 		
-		long t = 0;
-		float coeff = 5f;
-		long periode = 500;
-		while(true){
-			sa.trigger(t);
-			time.setText(t+"ms");
+		long debut = System.currentTimeMillis();
+		long simulationTime = debut;
+		float coeff = 1f;
+		long periode = 100;
+		long tempsSimulation = 10000;
+		while(simulationTime - debut <= tempsSimulation){
+			sa.trigger(simulationTime);
+			time.setText(simulationTime - debut +"ms");
 			Thread.sleep((long) (periode/coeff));
-			t+=periode;
+			simulationTime+=periode;
 		}
+		System.out.println("Fin");
 	}
 }
 

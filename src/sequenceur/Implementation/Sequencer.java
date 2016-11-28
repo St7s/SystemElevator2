@@ -2,6 +2,8 @@ package sequenceur.Implementation;
 
 import java.util.ArrayList;
 
+import com.sun.org.apache.bcel.internal.generic.CPInstruction;
+
 import sequenceur.Interface.Event;
 import sequenceur.Interface.ISequencer;
  class Sequencer implements ISequencer {
@@ -82,8 +84,9 @@ import sequenceur.Interface.ISequencer;
 	@Override
 	public void start() throws Throwable{ 
 		long debut = System.currentTimeMillis();
-		long tempsActuel;
-		while(((tempsActuel = System.currentTimeMillis()) - debut) < getTemps_execution())
+		long tempsActuel = debut;
+		long periode = 100;
+		while((tempsActuel - debut) < getTemps_execution())
 		{
 			for(Process processus : process)
 			{
@@ -94,8 +97,8 @@ import sequenceur.Interface.ISequencer;
 					processus.setLast_wake(tempsActuel);
 				}
 			}
-			Thread.sleep(1000);
-			
+			Thread.sleep((long) (periode/getCoefficient_temps()));
+			tempsActuel +=periode;;
 		}
 	 }
 	/**
