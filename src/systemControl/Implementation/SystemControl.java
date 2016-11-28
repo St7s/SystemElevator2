@@ -1,13 +1,12 @@
 package systemControl.Implementation;
 
 import systemControl.Interface.ISystemControl;
-import systemControl.Interface.IU_SC;
 
 import java.util.ArrayList;
 import systemAscenseur.Implementation.Sens;
 import systemAscenseur.Interface.SystemControl_SA;
 
-class SystemControl implements IU_SC, ISystemControl{
+class SystemControl implements ISystemControl{
 
 	private static SystemControl instance = null;
 	private static SystemControl_SA systemAscenseur;
@@ -49,16 +48,23 @@ class SystemControl implements IU_SC, ISystemControl{
 	 * @param command 
 	 */
 	public void Depiler() {
+		ArrayList<Commande> aRetirer = new ArrayList<Commande>();
 		for(Commande com : commandes)
 		{
 			if(com.niveau==niveauActuel)
 			{
-				if(last_commande.sens==com.sens||last_commande.niveau>com.niveau)
+				if(last_commande == null){
+					last_commande = com;
+				}
+				else if(last_commande.sens==com.sens||last_commande.niveau>com.niveau)
 				{
 					last_commande=com;
 				}
-				commandes.remove(commandes.get(commandes.indexOf(com)));
+				aRetirer.add(com);
 			}
+		}
+		for (Commande commande : aRetirer) {
+			commandes.remove(commandes.get(commandes.indexOf(commande)));
 		}
 	}
 
@@ -212,18 +218,15 @@ class SystemControl implements IU_SC, ISystemControl{
 		}
 		else if(temp.niveau==niveau)
 		{
-			System.out.println("Sens null");
 			systemAscenseur.commande(null);
 			Depiler();
 		}
 		else if(temp.niveau<niveau)
 		{
-			System.out.println("Sens down");
 			systemAscenseur.commande(Sens.DOWN);
 		}
 		else
 		{
-			System.out.println("Sens up");
 			systemAscenseur.commande(Sens.UP);
 		}
 
@@ -252,8 +255,6 @@ class SystemControl implements IU_SC, ISystemControl{
 	 * @param niveau 
 	 */
 	public void appel(int niveau, Sens direction) {
-		System.out.println(niveau);
-		System.out.println(direction);
 		Commande comm=new Commande(niveau, direction);
 		commandes.add(comm);
 		//MAJDeplacement();

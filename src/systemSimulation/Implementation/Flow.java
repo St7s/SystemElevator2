@@ -10,7 +10,7 @@ import sequenceur.Interface.Event;
 import utilisateur.ObserverAppel;
 import utilisateur.ObserverDeplacement;
 
- class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
+class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	/**
 	 * 
 	 */
@@ -75,13 +75,14 @@ import utilisateur.ObserverDeplacement;
 			tempsAttente = tempsAttente / usersHappy.size();
 			return tempsAttente;
 		}
-		
-	 }
+
+	}
 
 	/**
 	 * calcule du temps moyen d'attente pour qu'un deplacement soit satisfait
 	 */
-	public long temps_deplacement() { 
+	public long temps_deplacement() 
+	{ 
 		long tempsDeplacement = 0;
 		if (usersHappy.size() == 0) {
 			System.out.println("aucun utilisateur satisfait, ou aucune demande de deplacement");
@@ -95,51 +96,61 @@ import utilisateur.ObserverDeplacement;
 			return tempsDeplacement;
 		}
 	}
+
 	public void addUser(UserSimulation user)
 	{
-		user.addObserverAppel(oa);
-		user.addObserverDeplacement(od);
 		users.add(user);
 	}
+
+	public void addObserveurAppel(ObserverAppel observerAppel)
+	{
+		this.setObserverAppel(observerAppel);
+		for (UserSimulation userSimulation : users) 
+			userSimulation.addObserverAppel(observerAppel);
+	}
+
+	public void addObserveurDeplacement(ObserverDeplacement observateurDeplacement)
+	{
+		this.setObserverDeplacement(observateurDeplacement);
+		for (UserSimulation userSimulation : users)
+			userSimulation.addObserverDeplacement(observateurDeplacement);
+	}
+
 	/**
 	 * Singleton
 	 * @param nom_fichier
 	 * @throws IOException
 	 */
-	public static void creatFlow() throws IOException {
+	public static Flow creatFlow() throws IOException {
 		if (instance_Flow == null) {
 			instance_Flow = new Flow();
 		}
-	}
-	public static Flow getInstance() {
 		return instance_Flow;
 	}
 	private Flow()
 	{
-		
+		users = new ArrayList<UserSimulation>();
 	}
-	
+
 	/**
 	 * 
 	 * @param nom_fichier "nom niveau_initial niveau_fianl"
 	 * @throws IOException 
 	 */
 	public void addFichier(String nom_fichier) throws IOException { 
-		
-		
 		BufferedReader entree  = new BufferedReader(new FileReader(nom_fichier));
 		// premier ligne indique l'ordre des infos
 		String ligne = entree.readLine();
 		ligne = entree.readLine();
 		String[] ligne2;
-		users = new ArrayList<UserSimulation>();
+
 		while(ligne != null) {
 			ligne2 = ligne.split(" ");
 			this.addUser(new UserSimulation(ligne2[0], Integer.parseInt(ligne2[1]) , Integer.parseInt(ligne2[2]))); 
 		}
 		entree.close();
-	 }
-	
+	}
+
 	/**
 	 * 
 	 */
@@ -164,13 +175,13 @@ import utilisateur.ObserverDeplacement;
 			System.out.println("aucun utilisateur dans l'ascenseur ");
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
 	@Override
 	public void arret(int niveau) {
-		
+
 		// a changer
 		long t = Configurator.seq.SimulationTime();
 		//
@@ -192,7 +203,7 @@ import utilisateur.ObserverDeplacement;
 				// Appel IU pour faire entre l'utilisateur
 				out.entre();
 				// verification sur la surcharge
-				
+
 				if(surchage) {
 					for( ; i<usersAppel.size();i++)
 						if (usersAppel.get(i).niveau_initial == niveau)
@@ -206,12 +217,12 @@ import utilisateur.ObserverDeplacement;
 					usersInAscenseur.add(out);
 					usersAppel.remove(out);
 				}
-					
+
 			}
-		 i++;
+			i++;
 		}
-		
-	surchage = false;
+
+		surchage = false;
 	}
 
 

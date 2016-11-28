@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -24,6 +23,7 @@ import systemAscenseur.Interface.ISystemAscenseur;
 import systemAscenseur.Interface.ObserverArret;
 import systemAscenseur.Interface.ObserverNiveau;
 import systemAscenseur.Interface.ObserverSurcharge;
+import systemControl.Interface.ISystemControl;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -51,7 +51,6 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	private JLabel lblEtageActuel;
 	private JLabel lblNiveau;
 	private JLabel lblSurcharge;
-	private static ArrayList<Sens> listeCommandes = new ArrayList<Sens>();
 	private JLabel lblVitesseMoteur;
 	private JTextField txtVitesseMoteur;
 	private JLabel lblDistanceNiveaux;
@@ -266,35 +265,24 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		preview.setVisible(true);
 
 		/**Configuration du SystemAscenseur**/
-		float vitesseMoteur = (float) 1.1;
+		float vitesseMoteur = (float) 1;
 		int niveauMin = 0;
 		int niveauMax = 10;
 		float distanceNiveaux = 3;
-
+	
 		
-		listeCommandes.add(Sens.UP);
-		listeCommandes.add(Sens.UP);
-		listeCommandes.add(Sens.UP);
-
-		listeCommandes.add(null);
-		listeCommandes.add(null);
-		listeCommandes.add(null);
-
-		listeCommandes.add(Sens.UP);
-		listeCommandes.add(Sens.UP);
-		listeCommandes.add(Sens.UP);
-
-		listeCommandes.add(Sens.DOWN);
-		listeCommandes.add(Sens.DOWN);
-		listeCommandes.add(Sens.DOWN);
-
-		listeCommandes.add(Sens.UP);
-		listeCommandes.add(Sens.UP);
-		listeCommandes.add(Sens.UP);
-
+		//On cree le systeme de controle
+		ISystemControl sysControle = systemControl.Interface.SystemControlFactory.create();
+		
 		//On cree le systemeAscenseur
 		ISystemAscenseur sa = systemAscenseur.Interface.SystemAscenseurFactory.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux);
 
+		//On donne au systemControle l'interface pour commander le systemAscenseur
+		sysControle.link(sa);
+		
+		//On demande au systemControle d'observer le niveau du systemAscenseur
+		sa.addObserverNiveau((ObserverNiveau) sysControle);
+		
 		ObserverArret ObserverArret = new ObserversArretDummy();
 		sa.addObserverArret(ObserverArret);
 
@@ -305,13 +293,19 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		ObserverSurcharge ObserverSurcharge = new ObserverSurchargeDummy();
 		sa.addObserverSurcharge(ObserverSurcharge);
 
+		
+		sysControle.appel(1, Sens.UP);
+		sysControle.appel(3, Sens.UP);
+		sysControle.appel(0, Sens.UP);
+		
 		long t = 0;
-		for (int i = 0; i < listeCommandes.size(); i++) {
+		float coeff = 5f;
+		long periode = 500;
+		while(true){
 			sa.trigger(t);
 			time.setText(t+"ms");
-			sa.commande(listeCommandes.get(i));
-			Thread.sleep(1000);
-			t+=1000;
+			Thread.sleep((long) (periode/coeff));
+			t+=periode;
 		}
 	}
 }
