@@ -294,7 +294,8 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		sa.addObserverSurcharge(ObserverSurcharge);
 
 		
-		sysControle.appel(1, Sens.UP);
+		sysControle.appel(1, Sens.DOWN);
+		sysControle.appel(5, Sens.DOWN);
 		sysControle.appel(3, Sens.UP);
 		sysControle.appel(0, Sens.UP);
 		
