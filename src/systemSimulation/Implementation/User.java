@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import utilisateur.IUser;
 import utilisateur.ObserverAppel;
 import utilisateur.ObserverDeplacement;
-import utilisateur.ObserverEntre;
+import utilisateur.ObserverEntree;
 import utilisateur.ObserverSortie;
   class User implements IUser{
 	private ArrayList<ObserverAppel> oa; 
 	private ArrayList<ObserverDeplacement> od; 
-	private ArrayList<ObserverEntre> oe; 
+	private ArrayList<ObserverEntree> oe; 
 	private ArrayList<ObserverSortie> os; 
 	/**
 	 * l'utilisateur est dans la cabine ou pas
@@ -89,49 +89,40 @@ import utilisateur.ObserverSortie;
 	 }
 	@Override
 	public void addObserverAppel(ObserverAppel oa) {
-		// TODO Auto-generated method stub
 		this.oa.add(oa);
 	}
 	@Override
 	public void addObserverDeplacement(ObserverDeplacement od) {
-		// TODO Auto-generated method stub
 		this.od.add(od);
 	}
 	@Override
 	public void appel() {
-		// TODO Auto-generated method stub
 		for(ObserverAppel o : this.oa)
 			o.appel(this.niveau_initial);
 	}
 	@Override
 	public void deplacement() {
-		// TODO Auto-generated method stub
 		for(ObserverDeplacement o : this.od)
 			o.deplacement(this.niveau_final);
 		
 	}
 	@Override
-	public void addObserverEntre(ObserverEntre oe) {
-		// TODO Auto-generated method stub
+	public void addObserverEntre(ObserverEntree oe) {
 		this.oe.add(oe);
 	}
 	@Override
 	public void addObserverSortie(ObserverSortie os) {
-		// TODO Auto-generated method stub
 		this.os.add(os);
 	}
 	@Override
 	public void entre() {
-		// TODO Auto-generated method stub
-		for(ObserverEntre o : oe)
+		for(ObserverEntree o : oe)
 			o.entre();
 	}
 	@Override
 	public void sortie() {
-		// TODO Auto-generated method stub
 		for(ObserverSortie o : os)
 			o.sortie();
-		
 	}
 
 }

@@ -43,7 +43,7 @@ class CapteurNiveau {
 		//on test pour tous les niveaux
 		for (int niveau = niveauMin; niveau < niveauMax; niveau++){
 			distanceVersEtage = positionActuelle - (distancesCapteurs * niveau);//calcule de la distance 
-			if(distanceVersEtage <= 0.5f*distancesCapteurs && 0 <= distanceVersEtage){  //equivalent à un demi-étage supérieur
+			if(distanceVersEtage <= 0.3f*distancesCapteurs && 0 <= distanceVersEtage){  //equivalent à un demi-étage supérieur
 				return niveau;
 			}
 		}

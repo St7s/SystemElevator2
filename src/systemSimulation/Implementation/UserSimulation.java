@@ -6,7 +6,6 @@ package systemSimulation.Implementation;
 	
 	public UserSimulation(String nom, int niveau_initial, int niveau_final) {
 		super(nom, niveau_initial, niveau_final);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public long getTempsAppel() {
@@ -30,5 +29,4 @@ package systemSimulation.Implementation;
 	public void setTempsEntre(long tempsEntre) {
 		this.tempsEntre = tempsEntre;
 	}
-
 }

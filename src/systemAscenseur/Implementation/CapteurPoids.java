@@ -49,19 +49,19 @@ class CapteurPoids {
 	 * Methodes de classe 
 	 * ===========================================================
 	 */
-	public void ajouterPersonne() {
+	public boolean ajouterPersonne() {
 		if(poidsActuel < getNbrPersonneMax()){
 			poidsActuel++;		
-		} else {
-			//on peut pas ajouter ou on fait quand même
+			return true;
 		}
+		return false;
 	}
 
-	public void retirePersonne() {
+	public boolean retirePersonne() {
 		if(poidsActuel > 0){
 			poidsActuel--;
-		} else {
-			//on peut pas retirer
+			return true;
 		}
+		return false;
 	}
 }

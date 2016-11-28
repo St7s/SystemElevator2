@@ -104,23 +104,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * ===========================================================
 	 * Methodes de classe 
 	 * ===========================================================
-	 */
-	/**
-	 * Notifier tout les observeur du niveau de la position actuelles
-	 */
-	public void notifyAllNiveau(){
-		for (ObserverNiveau observerNiveau : observersNiveau)
-			observerNiveau.notifierNiveau(this.position);
-	}
-	
-	/**
-	 * Notifier tout les observeur d'arret de la position actuelle ou l'ascenseur s'arrete
-	 */
-	public void notifyAllArret(){
-		for (ObserverArret observerArret : observersArret)
-			observerArret.notifierArret(this.position);
-	}
-
+	 */	
 	/**
 	 * Mettre a jour les variables de temps
 	 * @param temps
@@ -140,23 +124,6 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * @param sens
 	 */
 	private void deplacement(Sens sens) {
-		long tempsEcoule = this.time2 - this.time1;
-		float vitesse = this.getMoteur().getVitesse();
-		float deplacement = (vitesse*tempsEcoule)/1000;
-		float positionApresMouvement = 0;
-		if(this.sensDeplacement == Sens.DOWN)
-			deplacement = deplacement * -1;
-		positionApresMouvement = this.getMoteur().getCabine().getPosition()+deplacement;
-		this.getMoteur().getCabine().setPosition(positionApresMouvement);
-		int niveauAsc = this.capteurNiveau.detecter(this.niveauMin, this.niveauMax, positionApresMouvement, this.distanceNiveaux);
-
-		if(niveauAsc != -1 && niveauAsc != this.position){
-			this.setPosition(niveauAsc);
-		}
-		
-		System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition() + " metres ou "+this.getMoteur().getCabine().getPosition()/this.getDistanceNiveaux() );
-		System.out.println("position ascenseur : "+ this.getPosition());
-		
 		this.sensDeplacement = sens;
 	}
 
@@ -179,8 +146,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 */
 	@Override
 	public void commande(Sens sens) {		
-		System.out.println("\n======================================\n"
-				+ "Reception de commande : " + sens + "("+this.getMoteur().getCabine().getPosition()+")");
+		System.out.println("Reception de commande : " + sens + "("+this.getMoteur().getCabine().getPosition()+" m)");
 		//Demande d'arret
 		if (sens == null){
 			if(this.getEtat() == Etat.DEPLACEMENT)
@@ -204,7 +170,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	}
 	/*
 	 * ===========================================================
-	 * Methodes Observer 
+	 * Methodes Observable 
 	 * ===========================================================
 	 */
 	@Override
@@ -213,6 +179,25 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	public void addObserverNiveau(ObserverNiveau obj){this.observersNiveau.add(obj);}
 	@Override
 	public void addObserverSurcharge(ObserverSurcharge obj){this.observersSurcharge.add(obj);}
+
+	@Override
+	public void notifyAllNiveau(){
+		for (ObserverNiveau observerNiveau : observersNiveau)
+			observerNiveau.notifierNiveau(this.position);
+	}
+
+
+	@Override
+	public void notifyAllArret(){
+		for (ObserverArret observerArret : observersArret)
+			observerArret.notifierArret(this.position);
+	}
+
+	@Override
+	public void notifyAllSurcharge() {
+		for (ObserverSurcharge observerSurcharge : observersSurcharge)
+			observerSurcharge.notifierSurcharge();
+	}
 	/*
 	 * ===========================================================
 	 * Methodes Event 
@@ -221,11 +206,51 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 
 	@Override
 	public void trigger(long t) {
+		System.out.println("\n==========================\ntriggered "+t);
 		this.miseAjourTemps(t);
-		//this.commande(test.get(0));
-		//test.remove(0);
-		/*for (ObserverNiveau observerNiveau : this.observersNiveau) {
-			observerNiveau.notifierNiveau(this.position);
-		}*/
+		
+		//Si on est au repos on demande ce qu'on fait en notifiant de notre position
+		if(this.getEtat() == Etat.REPOS)
+			this.notifyAllNiveau();
+		//Si on est en mouvement on effectue le mouvement
+		else{
+			//On calcul la distance parcourue
+			float distanceParcourue = (this.getMoteur().getVitesse()*(this.time2-this.time1))/1000;
+			if(this.sensDeplacement == Sens.DOWN) distanceParcourue = distanceParcourue * -1;
+
+			//On met a jour la nouvelle position de la cabine
+			float positionApresMouvement = this.getMoteur().getCabine().getPosition()+distanceParcourue;
+			this.getMoteur().getCabine().setPosition(positionApresMouvement);
+			int niveauAsc = this.capteurNiveau.detecter(this.niveauMin, this.niveauMax, this.getMoteur().getCabine().getPosition(), this.distanceNiveaux);
+			
+			System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition() + " metres ou "+this.getMoteur().getCabine().getPosition()/this.getDistanceNiveaux() );
+
+			
+			//Si la cabine atteint un nouveau niveau on fait varier cette valeur et on notifie tout les observeurs
+			if(niveauAsc != -1 && niveauAsc != this.position)
+				this.setPosition(niveauAsc);
+			System.out.println("position ascenseur : "+ this.getPosition());
+		}
+	}
+	/*
+	 * ===========================================================
+	 * Methodes ObserverEntree 
+	 * ===========================================================
+	 */
+
+	@Override
+	public void entre() {
+		if(!this.getMoteur().getCabine().getCapteurpoids().ajouterPersonne()){
+			this.notifyAllSurcharge();
+		}
+	}
+	/*
+	 * ===========================================================
+	 * Methodes ObserverSortie 
+	 * ===========================================================
+	 */
+	@Override
+	public void sortie() {
+		this.getMoteur().getCabine().getCapteurpoids().retirePersonne();
 	}
 }

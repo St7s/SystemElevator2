@@ -1,5 +1,5 @@
 package utilisateur;
 
-public interface ObserverEntre {
+public interface ObserverEntree {
 public void entre();
 }

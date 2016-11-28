@@ -52,7 +52,7 @@ public class SimulationTrigger {
 		ObserverSurcharge ObserverSurcharge = new ObserverSurchargeDummy();
 		sa.addObserverSurcharge(ObserverSurcharge);
 		
-		long t = 1;
+		long t = 0;
 		for (int i = 0; i < listeCommandes.size(); i++) {
 			
 			sa.trigger(t);
