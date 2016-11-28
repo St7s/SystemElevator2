@@ -73,6 +73,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 				tempsAttente =+ (user.getTempsEntre() - user.getTempsAppel());
 			}
 			tempsAttente = tempsAttente / usersHappy.size();
+			System.out.println("temps d'attente moyen pour un appel : "+tempsAttente);
 			return tempsAttente;
 		}
 
@@ -93,6 +94,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 				tempsDeplacement =+ (user.getTempsSortie() - user.getTempsEntre());
 			}
 			tempsDeplacement = tempsDeplacement / usersHappy.size();
+			System.out.println("temps d'attente moyen pour un deplacement : "+tempsDeplacement);
 			return tempsDeplacement;
 		}
 	}
