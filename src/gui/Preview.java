@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.GroupLayout;
@@ -54,7 +56,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	private JLabel lblVitesseMoteur;
 	private JTextField txtVitesseMoteur;
 	private JLabel lblDistanceNiveaux;
-	private JTextField textField;
+	private JTextField textDistanceNiveaux;
 	private static JLabel time;
 	/*
 	 * =========================================================== 
@@ -139,9 +141,15 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 
 		//Initialize components
 		lblFichierDemandes = new JLabel("Selectioner un fichier flow :");
-		txtEtageMin = new JTextField(2);
-		txtEtageMax = new JTextField(2);
+		txtEtageMin = new JTextField("0");
+		txtEtageMax = new JTextField("10");
 		btnStart = new JButton("DEMARER");
+		btnStart.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				System.out.println("dfd");
+			}
+		});
 		btnSelectFile = new JButton("CHOISIR");
 		lblNumeroEtageMin =  new JLabel("Etage min : ");
 		fichierChoisi = new JLabel("Aucun fichier choisi...");
@@ -149,11 +157,11 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		
 		lblVitesseMoteur = new JLabel("Vitesse Moteur (m/s) : ");
 		
-		txtVitesseMoteur = new JTextField(2);
+		txtVitesseMoteur = new JTextField("1");
 		
 		lblDistanceNiveaux = new JLabel("Distance entre 2 niveaux (m) : ");
 		
-		textField = new JTextField(2);
+		textDistanceNiveaux = new JTextField("3");
 
 		//Positionnement des elements genere automatiquement		
 		GroupLayout gl_panel = new GroupLayout(leftPanel);
@@ -185,7 +193,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 							.addContainerGap()
 							.addComponent(lblDistanceNiveaux, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textDistanceNiveaux, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(122)
 							.addComponent(btnStart)))
@@ -214,7 +222,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 						.addComponent(lblVitesseMoteur))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textDistanceNiveaux, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDistanceNiveaux))
 					.addGap(135)
 					.addComponent(btnStart)
@@ -236,6 +244,15 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 				}
 			}
 		});
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+ 
+		if(source == btnStart){
+			System.out.println("cdc");
+			//this.demarrer(sa);
+		} 
 	}
 
 
@@ -265,10 +282,10 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		preview.setVisible(true);
 
 		/**Configuration du SystemAscenseur**/
-		float vitesseMoteur = (float) 1;
-		int niveauMin = 0;
-		int niveauMax = 10;
-		float distanceNiveaux = 3;
+		float vitesseMoteur = Float.parseFloat(preview.txtVitesseMoteur.getText());
+		int niveauMin = Integer.parseInt(preview.txtEtageMin.getText());
+		int niveauMax = Integer.parseInt(preview.txtEtageMax.getText());
+		float distanceNiveaux = Float.parseFloat(preview.textDistanceNiveaux.getText());
 	
 		
 		//On cree le systeme de controle
@@ -298,6 +315,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		sysControle.appel(5, Sens.DOWN);
 		sysControle.appel(3, Sens.UP);
 		sysControle.appel(0, Sens.UP);
+		
 		
 		long t = 0;
 		float coeff = 5f;
