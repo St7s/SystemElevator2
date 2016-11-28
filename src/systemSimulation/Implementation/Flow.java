@@ -98,7 +98,12 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 			return tempsDeplacement;
 		}
 	}
-
+	public void tempDeplacementUser()
+	{
+		for (UserSimulation user : usersHappy) {
+			System.out.println("Nom : "+user.nom+" Temps Sortie : "+ (user.getTempsSortie()- user.getTempsEntre()) + " Temps Attentes "+(user.getTempsEntre() - user.getTempsAppel()));
+		}
+	}
 	public void addUser(UserSimulation user)
 	{
 		users.add(user);
@@ -176,7 +181,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 			usr1.setTempsAppel(t);
 			usr1.appel();
 			usersAppel.add(usr1);
-			users.remove(0);			
+			users.remove(usr1);			
 		}
 		else {
 			System.out.println("aucun utilisateur dans l'ascenseur ");
@@ -188,8 +193,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	 */
 	@Override
 	public void arret(int niveau) {
-
-		System.out.println("Arret ");
+		ArrayList<UserSimulation> supphap = new ArrayList<UserSimulation>();
 		// a changer
 		long t = Configurator.seq.SimulationTime();
 		//
@@ -198,20 +202,23 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 				in.inLift = false;
 				in.setTempsSortie(t);
 				usersHappy.add(in);
-				usersInAscenseur.remove(in);
+				supphap.add(in);
 				// Recuperer le temps courrant qui correspand au temps ou le deplacement est satisfait
 				// On appele l'inteface utilisateur pour faire sortir l'utilisateur
 				in.sortie();
 			}			
 		}
+		for (UserSimulation out : supphap)
+			usersInAscenseur.remove(out);
 		int i = 0;
 		//
+		ArrayList<UserSimulation> supp = new ArrayList<UserSimulation>();
+	
 		for (UserSimulation out : usersAppel) {
 			if (out.niveau_initial == niveau) {
 				// Appel IU pour faire entre l'utilisateur
 				out.entre();
 				// verification sur la surcharge
-
 				if(surchage) {
 					for( ; i<usersAppel.size();i++)
 						if (usersAppel.get(i).niveau_initial == niveau)
@@ -223,13 +230,14 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 					out.setTempsEntre(t);
 					out.deplacement();
 					usersInAscenseur.add(out);
-					usersAppel.remove(out);
+					supp.add(out);
 				}
 
 			}
 			i++;
 		}
-
+		for (UserSimulation out : supp)
+			usersAppel.remove(out);
 		surchage = false;
 	}
 

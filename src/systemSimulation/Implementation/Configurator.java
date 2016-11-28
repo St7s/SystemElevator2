@@ -24,7 +24,7 @@ class Configurator {
 		/**Configuration du Sequenceur**/
 		long temps_debut = 0;
 		float coefficient_temps = 1;
-		long temps_execution = 9000;
+		long temps_execution = 100000;
 
 		/**Configuration du SystemAscenseur**/
 		float vitesseMoteur = 1;
@@ -74,6 +74,9 @@ class Configurator {
 		sa.addObserverSurcharge(ui);
 		seq.addProcess(flow,12);
 		seq.start();
+		flow.tempDeplacementUser();
+		flow.temps_attente();
+		flow.temps_deplacement();
 
 	} 
 
