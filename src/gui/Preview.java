@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
-import sequenceur.Interface.Event;
 import systemAscenseur.Implementation.Sens;
 import systemAscenseur.Implementation.tests.ObserverNiveauDummy;
 import systemAscenseur.Implementation.tests.ObserverSurchargeDummy;
