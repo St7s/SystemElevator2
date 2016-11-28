@@ -1,11 +1,7 @@
 package interfaceUtilisateur.Implementation;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import interfaceUtilisateur.Interface.IintefaceUtilisateur;
-import interfaceUtilisateur.Interface.ObservableIU;
-=======
->>>>>>> c0b889933cde2e349955b068a77439899f3be871
 import interfaceUtilisateur.Interface.ObserverArretIU;
 import interfaceUtilisateur.Interface.ObserverSurchargeIU;
 import systemAscenseur.Implementation.Sens;
