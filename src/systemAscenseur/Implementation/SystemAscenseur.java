@@ -149,10 +149,8 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		System.out.println("Reception de commande : " + sens + "("+this.getMoteur().getCabine().getPosition()+" m)");
 		//Demande d'arret
 		if (sens == null){
-			if(this.getEtat() == Etat.DEPLACEMENT)
-				this.setEtat(Etat.TRANSITOIRE);
-			else
-				this.setEtat(Etat.REPOS);
+			
+			this.setEtat(Etat.REPOS);
 			this.arretNiveau();
 		}
 		//Demande de monter
@@ -213,7 +211,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 		if(this.getEtat() == Etat.REPOS)
 			this.notifyAllNiveau();
 		//Si on est en mouvement on effectue le mouvement
-		else{
+		else if(this.getEtat() == Etat.DEPLACEMENT){
 			//On calcul la distance parcourue
 			float distanceParcourue = (this.getMoteur().getVitesse()*(this.time2-this.time1))/1000;
 			if(this.sensDeplacement == Sens.DOWN) distanceParcourue = distanceParcourue * -1;
@@ -221,14 +219,16 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 			//On met a jour la nouvelle position de la cabine
 			float positionApresMouvement = this.getMoteur().getCabine().getPosition()+distanceParcourue;
 			this.getMoteur().getCabine().setPosition(positionApresMouvement);
-			int niveauAsc = this.capteurNiveau.detecter(this.niveauMin, this.niveauMax, this.getMoteur().getCabine().getPosition(), this.distanceNiveaux);
+			float coef = this.getMoteur().getVitesse() ;
+			int niveauAsc = this.capteurNiveau.detecter(this.niveauMin, this.niveauMax, this.getMoteur().getCabine().getPosition(), this.distanceNiveaux, coef);
 			
 			System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition() + " metres ou "+this.getMoteur().getCabine().getPosition()/this.getDistanceNiveaux() );
 
 			
 			//Si la cabine atteint un nouveau niveau on fait varier cette valeur et on notifie tout les observeurs
-			if(niveauAsc != -1 && niveauAsc != this.position)
+			if(niveauAsc != -1 && niveauAsc != this.position){
 				this.setPosition(niveauAsc);
+			}
 			System.out.println("position ascenseur : "+ this.getPosition());
 		}
 	}

@@ -70,20 +70,13 @@ class Moteur {
 	 * ===========================================================
 	 */
 	public void marche(Sens sens) {
-		if (this.getEtat() == EtatMoteur.ARRET){
-			etat = EtatMoteur.MARCHE;
-			this.getCabine().miseEnMouvement(this.getVitesse());
-		} else {
-			//System.out.println("DEBUG : le moteur est deja en marche");
-		}
+		etat = EtatMoteur.MARCHE;
+		this.getCabine().miseEnMouvement(this.getVitesse());
 	}
 
 	public void arretImmediat() {
-		if (this.getEtat() == EtatMoteur.MARCHE){
-			etat = EtatMoteur.ARRET;
-		} else {
-			//System.out.println("DEBUG : le moteur est deja arreter");
-		}
+		etat = EtatMoteur.ARRET;
+
 	}
 
 }
