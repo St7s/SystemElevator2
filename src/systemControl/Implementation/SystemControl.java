@@ -14,10 +14,10 @@ class SystemControl implements ISystemControl{
 	private ArrayList<Commande> commandes = new ArrayList<Commande>();
 	private Commande last_commande = null;
 	private int niveauActuel;
-	
-	
+
+
 	private SystemControl(){}
-	
+
 	/**
 	 * Getter of commande
 	 */
@@ -33,7 +33,7 @@ class SystemControl implements ISystemControl{
 		if(SystemControl.systemAscenseur == null)
 			SystemControl.systemAscenseur = systemAscenseur;
 	}
-	
+
 	public ArrayList<Commande> getCommande() {
 		return commandes; 
 	}
@@ -172,8 +172,8 @@ class SystemControl implements ISystemControl{
 
 		for(Commande uneCommande: this.commandes)
 		{
+			// si on trouve une commande avec un etage inf a  last_element et sup a  next et Sens vers le bas
 			if ((uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau > next.niveau) && (uneCommande.sens == Sens.DOWN))
-				// si on trouve une commande avec un etage inf a  last_element et sup a  next et Sens vers le bas
 			{
 				next.copy(uneCommande);
 			}
