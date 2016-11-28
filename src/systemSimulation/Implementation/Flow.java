@@ -73,6 +73,7 @@ import utilisateur.ObserverDeplacement;
 				tempsAttente =+ (user.getTempsEntre() - user.getTempsAppel());
 			}
 			tempsAttente = tempsAttente / usersHappy.size();
+			System.out.println("temps d'attente moyen pour un appel : "+tempsAttente);
 			return tempsAttente;
 		}
 		
@@ -92,6 +93,7 @@ import utilisateur.ObserverDeplacement;
 				tempsDeplacement =+ (user.getTempsSortie() - user.getTempsEntre());
 			}
 			tempsDeplacement = tempsDeplacement / usersHappy.size();
+			System.out.println("temps d'attente moyen pour un deplacement : "+tempsDeplacement);
 			return tempsDeplacement;
 		}
 	}
