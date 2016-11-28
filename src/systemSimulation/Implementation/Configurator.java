@@ -1,4 +1,6 @@
 package systemSimulation.Implementation;
+import interfaceUtilisateur.Implementation.IintefaceUtilisateur;
+import interfaceUtilisateur.Interface.SystemIUFactory;
 import sequenceur.Interface.ISequencer;
 import sequenceur.Interface.SequenceurFactory;
 import systemAscenseur.Interface.ISystemAscenseur;
@@ -48,7 +50,7 @@ class Configurator {
 
 		seq.addProcess(sa,12);
 
-		ObserverAppel ui = null;
+		IintefaceUtilisateur ui = SystemIUFactory.getInstance();
 		
 		//On cree le Flow
 		Flow flow = Flow.creatFlow();
@@ -57,7 +59,7 @@ class Configurator {
 		flow.addFichier("testFlow");
 		
 		//On ratache l'interface Utilisateur aux utilisateurs
-		flow.addObserveurAppel(ui);
+		flow.addObserveurAppel((ObserverAppel) ui);
 		
 		
 		

@@ -8,5 +8,5 @@ public interface UserInterface {
 
 	public void monterAscenseur();
 
-	public void appel(Sens deplacement, int pos);
+	public void emettreAppel(Sens deplacement, int pos);
 }

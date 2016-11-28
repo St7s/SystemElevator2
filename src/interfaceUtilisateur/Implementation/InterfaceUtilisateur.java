@@ -12,12 +12,21 @@ import systemAscenseur.Interface.ObserverNiveau;
 import systemAscenseur.Interface.ObserverSurcharge;
 import systemControl.Interface.IU_SC;
 
-public class InterfaceUtilisateur implements SystemControl_IU, ObserverNiveau, UserInterface,ObservableIU,ObserverArret,ObserverSurcharge {
+public class InterfaceUtilisateur implements IintefaceUtilisateur {
 	public Sens display_sens;
 	public int display_pos;
 	public IU_SC systemeControle;
-	private ArrayList<ObserverArretIU> oa;
-	private ArrayList<ObserverSurchargeIU> os;
+	private ArrayList<ObserverArretIU> observeursArret;
+	private ArrayList<ObserverSurchargeIU> observeursSurcharge;
+	
+	public InterfaceUtilisateur(){
+		this.display_sens = null;
+		this.display_pos = 0;
+		this.systemeControle = null;
+		this.observeursArret = new ArrayList<ObserverArretIU>();
+		this.observeursSurcharge = new ArrayList<ObserverSurchargeIU>();
+	}
+	
 	public Sens getDisplay_sens() {
 		return display_sens;
 	}
@@ -58,7 +67,7 @@ public class InterfaceUtilisateur implements SystemControl_IU, ObserverNiveau, U
 		// TODO Auto-generated method
 	}
 
-	public void appel(Sens deplacement, int pos) {
+	public void emettreAppel(Sens deplacement, int pos) {
 		this.systemeControle.appel(pos, deplacement);
 	
 	}
@@ -71,26 +80,26 @@ public class InterfaceUtilisateur implements SystemControl_IU, ObserverNiveau, U
 	@Override
 	public void addObserverSurcharge(ObserverSurchargeIU os) {
 		// TODO Auto-generated method stub
-	this.os.add(os)	;
+	this.observeursSurcharge.add(os)	;
 	}
 
 	@Override
 	public void addObserverArret(ObserverArretIU oa) {
 		// TODO Auto-generated method stub
-		this.oa.add(oa);
+		this.observeursArret.add(oa);
 	}
 
 	@Override
 	public void notifyObserverSurcharge() {
 		// TODO Auto-generated method stub
-		for(ObserverSurchargeIU o :os)
+		for(ObserverSurchargeIU o :observeursSurcharge)
 			o.surcharge();
 	}
 
 	@Override
 	public void notifyObserverArret(int niveau) {
 		// TODO Auto-generated method stub
-		for(ObserverArretIU o :oa)
+		for(ObserverArretIU o :observeursArret)
 			o.arret(niveau);
 	}
 
@@ -105,6 +114,12 @@ public class InterfaceUtilisateur implements SystemControl_IU, ObserverNiveau, U
 		// TODO Auto-generated method stub
 	this.notifyObserverArret(niveau);	
 	}
+
+	@Override
+	public void appel(int niveau, Sens sens) {
+		this.emettreAppel(sens, niveau);
+	}
+
 
 
 	

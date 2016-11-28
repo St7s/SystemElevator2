@@ -149,11 +149,11 @@ class SystemControl implements ISystemControl{
 		for(Commande uneCommande: this.commandes)
 		{
 			// si on trouve une commande avec un etage sup a  last_element et inf a  next et Sens vers le haut
-			if ((uneCommande.niveau >= this.last_commande.niveau) && (uneCommande.niveau < next.niveau) && (uneCommande.sens == Sens.UP))
+			if ((uneCommande.sens == Sens.UP) && (uneCommande.niveau >= this.last_commande.niveau) && (uneCommande.niveau < next.niveau))
 			{
 				next = uneCommande.clone();
 			}
-			else if((uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau < next.niveau) && (uneCommande.sens == Sens.UP) && (last_commande.sens == Sens.DOWN))
+			else if((uneCommande.sens == Sens.UP) && (last_commande.sens == Sens.DOWN) && (uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau < next.niveau))
 			{
 				next = uneCommande.clone();
 			}
@@ -171,9 +171,9 @@ class SystemControl implements ISystemControl{
 		for(Commande uneCommande: this.commandes)
 		{
 			// si on trouve une commande avec un etage inf a  last_element et sup a  next et Sens vers le bas
-			if ((uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau > next.niveau) && (uneCommande.sens == Sens.DOWN))
+			if ((uneCommande.sens == Sens.DOWN) && (uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau > next.niveau))
 				next = uneCommande.clone();
-			else if((uneCommande.niveau >= this.last_commande.niveau) && (uneCommande.niveau > next.niveau) && (uneCommande.sens == Sens.DOWN) && (last_commande.sens == Sens.UP))
+			else if((uneCommande.sens == Sens.DOWN) && (last_commande.sens == Sens.UP) && (uneCommande.niveau >= this.last_commande.niveau) && (uneCommande.niveau > next.niveau))
 				next = uneCommande.clone();
 		}
 		return next;

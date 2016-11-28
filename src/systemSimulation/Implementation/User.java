@@ -1,6 +1,8 @@
 package systemSimulation.Implementation;
 
 import java.util.ArrayList;
+
+import systemAscenseur.Implementation.Sens;
 import utilisateur.IUser;
 import utilisateur.ObserverAppel;
 import utilisateur.ObserverDeplacement;
@@ -98,7 +100,7 @@ import utilisateur.ObserverSortie;
 	@Override
 	public void appel() {
 		for(ObserverAppel o : this.oa)
-			o.appel(this.niveau_initial);
+			o.appel(this.niveau_initial, (this.niveau_initial-this.niveau_final > 0)?Sens.UP:Sens.DOWN);
 	}
 	@Override
 	public void deplacement() {
