@@ -7,6 +7,7 @@ import systemAscenseur.Interface.ISystemAscenseur;
 import systemAscenseur.Interface.ObserverNiveau;
 import systemControl.Interface.ISystemControl;
 import utilisateur.ObserverAppel;
+import utilisateur.ObserverDeplacement;
 
 class Configurator {
 
@@ -59,9 +60,11 @@ class Configurator {
 		flow.addFichier("testFlow");
 		
 		//On ratache l'interface Utilisateur aux utilisateurs
+		flow.addObserveurDeplacement((ObserverDeplacement) ui);
+		
+		//On ratache l'interface Utilisateur aux utilisateurs
 		flow.addObserveurAppel((ObserverAppel) ui);
-		
-		
+
 		
 		//On demande au systemControle d'observer le niveau du systemAscenseur
 		sa.addObserverNiveau((ObserverNiveau) sysControle);

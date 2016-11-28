@@ -98,7 +98,7 @@ import utilisateur.ObserverSortie;
 		this.od.add(od);
 	}
 	@Override
-	public void appel() {
+	public void appel(){
 		for(ObserverAppel o : this.oa)
 			o.appel(this.niveau_initial, (this.niveau_initial-this.niveau_final > 0)?Sens.UP:Sens.DOWN);
 	}
@@ -106,7 +106,6 @@ import utilisateur.ObserverSortie;
 	public void deplacement() {
 		for(ObserverDeplacement o : this.od)
 			o.deplacement(this.niveau_final);
-		
 	}
 	@Override
 	public void addObserverEntre(ObserverEntree oe) {
