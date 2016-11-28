@@ -45,9 +45,7 @@ public class Commande {
 		 this.sens = sens; 
 	} 
 
-	public void copy(Commande c)
-	{
-		this.niveau = c.niveau;
-		this.sens = c.sens;
+	public Commande clone(){
+		return new Commande(this.niveau, this.sens);
 	}
 }

@@ -143,20 +143,19 @@ class SystemControl implements ISystemControl{
 	 * Retourne la commande avec niveau juste superieur et sens vers le haut
 	 * @return Commande
 	 */
-	public Commande nextUp()
-	{
+	public Commande nextUp(){
 		Commande next = new Commande(systemAscenseur.getNiveauMax()+1,Sens.DOWN);
-
+		
 		for(Commande uneCommande: this.commandes)
 		{
 			// si on trouve une commande avec un etage sup a  last_element et inf a  next et Sens vers le haut
 			if ((uneCommande.niveau >= this.last_commande.niveau) && (uneCommande.niveau < next.niveau) && (uneCommande.sens == Sens.UP))
 			{
-				next.copy(uneCommande);
+				next = uneCommande.clone();
 			}
 			else if((uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau < next.niveau) && (uneCommande.sens == Sens.UP) && (last_commande.sens == Sens.DOWN))
 			{
-				next.copy(uneCommande);
+				next = uneCommande.clone();
 			}
 		}
 		return next;
@@ -166,21 +165,16 @@ class SystemControl implements ISystemControl{
 	 * Retourne la commande avec niveau juste superieur et sens vers le haut
 	 * @return Commande
 	 */
-	public Commande nextDown()
-	{
+	public Commande nextDown(){
 		Commande next = new Commande(systemAscenseur.getNiveauMin()-1,Sens.UP);
 
 		for(Commande uneCommande: this.commandes)
 		{
 			// si on trouve une commande avec un etage inf a  last_element et sup a  next et Sens vers le bas
 			if ((uneCommande.niveau <= this.last_commande.niveau) && (uneCommande.niveau > next.niveau) && (uneCommande.sens == Sens.DOWN))
-			{
-				next.copy(uneCommande);
-			}
+				next = uneCommande.clone();
 			else if((uneCommande.niveau >= this.last_commande.niveau) && (uneCommande.niveau > next.niveau) && (uneCommande.sens == Sens.DOWN) && (last_commande.sens == Sens.UP))
-			{
-				next.copy(uneCommande);
-			}
+				next = uneCommande.clone();
 		}
 		return next;
 	}
@@ -235,13 +229,9 @@ class SystemControl implements ISystemControl{
 	public void deplacement(int niveau) {
 		Sens direction;
 		if(niveauActuel-niveau<0)
-		{
 			direction=Sens.UP;
-		}
 		else
-		{
 			direction=Sens.DOWN;
-		}
 		Commande comm = new Commande(niveau,direction);
 		commandes.add(comm);
 		//MAJDeplacement();
