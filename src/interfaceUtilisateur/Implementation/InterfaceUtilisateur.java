@@ -1,16 +1,14 @@
 package interfaceUtilisateur.Implementation;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import interfaceUtilisateur.Interface.IintefaceUtilisateur;
 import interfaceUtilisateur.Interface.ObservableIU;
+=======
+>>>>>>> c0b889933cde2e349955b068a77439899f3be871
 import interfaceUtilisateur.Interface.ObserverArretIU;
 import interfaceUtilisateur.Interface.ObserverSurchargeIU;
-import interfaceUtilisateur.Interface.SystemControl_IU;
-import interfaceUtilisateur.Interface.UserInterface;
 import systemAscenseur.Implementation.Sens;
-import systemAscenseur.Interface.ObserverArret;
-import systemAscenseur.Interface.ObserverNiveau;
-import systemAscenseur.Interface.ObserverSurcharge;
 import systemControl.Interface.IU_SC;
 
 public class InterfaceUtilisateur implements IintefaceUtilisateur {
