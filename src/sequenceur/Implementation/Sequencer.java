@@ -93,7 +93,7 @@ import sequenceur.Interface.ISequencer;
 				{
 					simulationTime = ((long) (temps_debut+ ((tempsActuel - debut) )));
 					processus.trigger(simulationTime);
-					processus.setLast_wake(tempsActuel);
+					processus.setLast_wake(simulationTime);
 				}
 			}
 			Thread.sleep((long) (periode/getCoefficient_temps()));
