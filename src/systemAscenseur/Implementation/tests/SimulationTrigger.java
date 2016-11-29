@@ -10,7 +10,7 @@ import systemAscenseur.Interface.ObserverSurcharge;
 
 public class SimulationTrigger {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args, int poidsMax) throws InterruptedException {
 		
 		/**Configuration du SystemAscenseur**/
 		float vitesseMoteur = (float) 1.1;
@@ -41,7 +41,7 @@ public class SimulationTrigger {
 		listeCommandes.add(Sens.UP);
 		
 		//On cree le systemeAscenseur
-		ISystemAscenseur sa = systemAscenseur.Interface.SystemAscenseurFactory.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux);
+		ISystemAscenseur sa = systemAscenseur.Interface.SystemAscenseurFactory.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux, poidsMax);
 		
 		ObserverArret ObserverArret = new ObserversArretDummy();
 		sa.addObserverArret(ObserverArret);

@@ -55,14 +55,7 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 	 * Methodes de classe 
 	 * ===========================================================
 	 */
-	public void appelServi(int niveau) {
-		System.out.println("Vous etes au niveau : " + niveau);
-	}
-
-	public void demandeTraite(int niveau) {
-		this.systemeControle.appel(niveau, null);
-	}
-
+	
 	
 
 	public void monterAscenseur(){}
@@ -73,7 +66,7 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 
 	@Override
 	public void notifierNiveau(int niveau) {
-		System.out.println("L'ascenseur est au Niveau : " + niveau);
+		System.out.println("IU >> L'ascenseur est au Niveau : " + niveau);
 	}
 
 	@Override
@@ -110,19 +103,15 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 
 	@Override
 	public void appel(int niveau, Sens sens) {
-		System.out.println("Appel :"+niveau);
 		this.emettreAppel(sens, niveau);
 	}
 
 	@Override
 	public void deplacement(int niveau) {
-		// TODO Auto-generated method stub
-		System.out.println("Deplacement :"+niveau);
 		this.systemeControle.deplacement(niveau);
 	}
 	@Override
-	public void link(IU_SC cn)
-	{
+	public void link(IU_SC cn)	{
 		this.systemeControle = cn;
 	}
 }

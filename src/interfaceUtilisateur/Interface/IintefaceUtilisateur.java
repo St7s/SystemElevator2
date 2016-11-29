@@ -7,6 +7,6 @@ import systemControl.Interface.IU_SC;
 import utilisateur.ObserverAppelUser;
 import utilisateur.ObserverDeplacementUser;
 
-public interface IintefaceUtilisateur extends SystemControl_IU, ObserverNiveau, UserInterface, ObserverAppelUser, ObservableIU,ObserverArret,ObserverSurcharge,ObserverDeplacementUser{
+public interface IintefaceUtilisateur extends  ObserverNiveau, UserInterface, ObserverAppelUser, ObservableIU,ObserverArret,ObserverSurcharge,ObserverDeplacementUser{
 	public void link(IU_SC cn);
 }

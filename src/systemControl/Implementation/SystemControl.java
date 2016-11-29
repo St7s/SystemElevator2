@@ -203,23 +203,17 @@ class SystemControl implements ISystemControl{
 		niveauActuel = niveau;
 		Commande temp = algoWithSens();
 		if(temp == null)
-		{
-			System.out.println("Pas de commande");
 			systemAscenseur.commande(null);
-		}
 		else if(temp.niveau==niveau)
 		{
 			systemAscenseur.commande(null);
 			Depiler();
 		}
 		else if(temp.niveau<niveau)
-		{
 			systemAscenseur.commande(Sens.DOWN);
-		}
 		else
-		{
 			systemAscenseur.commande(Sens.UP);
-		}
+		
 
 	}
 	/**

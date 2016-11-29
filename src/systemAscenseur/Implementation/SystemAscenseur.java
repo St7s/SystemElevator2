@@ -83,7 +83,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * @param moteur
 	 * @param capteurNiveau
 	 */
-	public SystemAscenseur(int niveauMin, int niveauMax, float distanceNiveaux, Moteur moteur, CapteurNiveau capteurNiveau) {
+	public SystemAscenseur(int niveauMin, int niveauMax, float distanceNiveaux, Moteur moteur, CapteurNiveau capteurNiveau, int poidsMax) {
 		this.niveauMin = niveauMin;
 		this.niveauMax = niveauMax;
 		this.position = 0;
@@ -147,10 +147,9 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 */
 	@Override
 	public void commande(Sens sens) {		
-		System.out.println("Reception de commande : " + sens + "("+this.getMoteur().getCabine().getPosition()+" m)");
+		//System.out.println("Reception de commande : " + sens + "("+this.getMoteur().getCabine().getPosition()+" m)");
 		//Demande d'arret
 		if (sens == null){
-			
 			this.setEtat(Etat.REPOS);
 			this.arretNiveau();
 		}
@@ -205,7 +204,6 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 
 	@Override
 	public void trigger(long t) {
-		System.out.println("\n==========================\ntriggered "+t);
 		this.miseAjourTemps(t);
 		
 		//Si on est au repos on demande ce qu'on fait en notifiant de notre position
@@ -223,14 +221,10 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 			float coef = this.getMoteur().getVitesse() ;
 			int niveauAsc = this.capteurNiveau.detecter(this.niveauMin, this.niveauMax, this.getMoteur().getCabine().getPosition(), this.distanceNiveaux, coef);
 			
-			System.out.println("position reelle : "+ this.getMoteur().getCabine().getPosition() + " metres ou "+this.getMoteur().getCabine().getPosition()/this.getDistanceNiveaux() );
-
-			
 			//Si la cabine atteint un nouveau niveau on fait varier cette valeur et on notifie tout les observeurs
 			if(niveauAsc != -1 && niveauAsc != this.position){
 				this.setPosition(niveauAsc);
 			}
-			System.out.println("position ascenseur : "+ this.getPosition());
 		}
 	}
 	/*
@@ -238,7 +232,6 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * Methodes ObserverEntree 
 	 * ===========================================================
 	 */
-
 	@Override
 	public void entre() {
 		if(!this.getMoteur().getCabine().getCapteurpoids().ajouterPersonne()){

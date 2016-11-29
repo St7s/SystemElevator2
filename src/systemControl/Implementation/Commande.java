@@ -4,16 +4,10 @@ import systemAscenseur.Implementation.Sens;
 
 public class Commande {
 
-	/**
-	 * 
-	 */
 	public int niveau;
 	public Sens sens;
 	
-	public Commande()
-	{
-		
-	}
+	public Commande(){}
 	
 	public Commande(int niv, Sens s)
 	{
