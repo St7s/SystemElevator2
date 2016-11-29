@@ -70,7 +70,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 		}
 		else {
 			for (UserSimulation user : usersHappy) {
-				tempsAttente =+ (user.getTempsEntre() - user.getTempsAppel());
+				tempsAttente += (user.getTempsEntre() - user.getTempsAppel());
 			}
 			tempsAttente = tempsAttente / usersHappy.size();
 			System.out.println("temps d'attente moyen pour un appel : "+tempsAttente);
@@ -91,7 +91,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 		}
 		else {
 			for (UserSimulation user : usersHappy) {
-				tempsDeplacement =+ (user.getTempsSortie() - user.getTempsEntre());
+				tempsDeplacement += (user.getTempsSortie() - user.getTempsEntre());
 			}
 			tempsDeplacement = tempsDeplacement / usersHappy.size();
 			System.out.println("temps d'attente moyen pour un deplacement : "+tempsDeplacement);
@@ -184,7 +184,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 			users.remove(usr1);			
 		}
 		else {
-			System.out.println("Liste d'User Fini");
+			System.out.println("aucun utilisateur dans l'ascenseur ");
 		}
 	}
 

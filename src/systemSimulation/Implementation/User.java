@@ -104,7 +104,7 @@ import utilisateur.ObserverSortie;
 	@Override
 	public void appel(){
 		for(ObserverAppelUser o : this.oa)
-			o.appel(this.niveau_initial, (this.niveau_initial-this.niveau_final > 0)?Sens.UP:Sens.DOWN);
+			o.appel(this.niveau_initial, (this.niveau_initial-this.niveau_final > 0)?Sens.DOWN:Sens.UP);
 	}
 	@Override
 	public void deplacement() {

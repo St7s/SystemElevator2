@@ -2,7 +2,6 @@ package sequenceur.Implementation;
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 
 import sequenceur.Interface.Event;
 import sequenceur.Interface.ISequencer;
@@ -92,7 +91,7 @@ import sequenceur.Interface.ISequencer;
 			{
 				if((tempsActuel - processus.getLast_wake() )>= processus.getPeriode())
 				{
-					simulationTime = ((long) (temps_debut+ ((tempsActuel - debut) * getCoefficient_temps())));
+					simulationTime = ((long) (temps_debut+ ((tempsActuel - debut) )));
 					processus.trigger(simulationTime);
 					processus.setLast_wake(tempsActuel);
 				}
