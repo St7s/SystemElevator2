@@ -1,4 +1,4 @@
-package gui;
+package systemSimulation.Implementation;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -17,16 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
-import systemAscenseur.Implementation.Sens;
-import systemAscenseur.Implementation.tests.ObserverNiveauDummy;
-import systemAscenseur.Implementation.tests.ObserverSurchargeDummy;
-import systemAscenseur.Implementation.tests.ObserversArretDummy;
-import systemAscenseur.Interface.ISystemAscenseur;
-import systemAscenseur.Interface.ObserverArret;
 import systemAscenseur.Interface.ObserverNiveau;
 import systemAscenseur.Interface.ObserverSurcharge;
-import systemControl.Interface.ISystemControl;
-
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -58,6 +50,8 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	private JLabel lblDistanceNiveaux;
 	private JTextField textDistanceNiveaux;
 	private static JLabel time;
+	
+	private static Configurator configurateur;
 	/*
 	 * =========================================================== 
 	 * Constructeur
@@ -143,13 +137,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		lblFichierDemandes = new JLabel("Selectioner un fichier flow :");
 		txtEtageMin = new JTextField("0");
 		txtEtageMax = new JTextField("10");
-		btnStart = new JButton("DEMARER");
-		btnStart.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent event) {
-				System.out.println("dfd");
-			}
-		});
+		btnStart = new JButton("DEMARER");	
 		btnSelectFile = new JButton("CHOISIR");
 		lblNumeroEtageMin =  new JLabel("Etage min : ");
 		fichierChoisi = new JLabel("Aucun fichier choisi...");
@@ -244,6 +232,16 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 				}
 			}
 		});
+		
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					configurateur.demarer();
+				} catch (Throwable e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -281,54 +279,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		preview = new Preview();
 		preview.setVisible(true);
 
-		/**Configuration du SystemAscenseur**/
-		float vitesseMoteur = Float.parseFloat(preview.txtVitesseMoteur.getText());
-		int niveauMin = Integer.parseInt(preview.txtEtageMin.getText());
-		int niveauMax = Integer.parseInt(preview.txtEtageMax.getText());
-		float distanceNiveaux = Float.parseFloat(preview.textDistanceNiveaux.getText());
-	
-		
-		//On cree le systeme de controle
-		ISystemControl sysControle = systemControl.Interface.SystemControlFactory.create();
-		
-		//On cree le systemeAscenseur
-		ISystemAscenseur sa = systemAscenseur.Interface.SystemAscenseurFactory.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux);
-
-		//On donne au systemControle l'interface pour commander le systemAscenseur
-		sysControle.link(sa);
-		
-		//On demande au systemControle d'observer le niveau du systemAscenseur
-		sa.addObserverNiveau((ObserverNiveau) sysControle);
-		
-		ObserverArret ObserverArret = new ObserversArretDummy();
-		sa.addObserverArret(ObserverArret);
-
-		ObserverNiveau ObserverNiveau = new ObserverNiveauDummy();
-		sa.addObserverNiveau(ObserverNiveau);
-		sa.addObserverNiveau(preview);
-		
-		ObserverSurcharge ObserverSurcharge = new ObserverSurchargeDummy();
-		sa.addObserverSurcharge(ObserverSurcharge);
-
-		
-		sysControle.appel(1, Sens.DOWN);
-		sysControle.appel(5, Sens.DOWN);
-		sysControle.appel(3, Sens.UP);
-		sysControle.appel(0, Sens.UP);
-		
-		
-		long debut = System.currentTimeMillis();
-		long simulationTime = debut;
-		float coeff = 1f;
-		long periode = 100;
-		long tempsSimulation = 10000;
-		while(simulationTime - debut <= tempsSimulation){
-			sa.trigger(simulationTime);
-			time.setText(simulationTime - debut +"ms");
-			Thread.sleep((long) (periode/coeff));
-			simulationTime+=periode;
-		}
-		System.out.println("Fin");
+		configurateur = new Configurator(0, 100, 100000, 1, 0, 10, 3, "users");
 	}
 }
 
