@@ -18,10 +18,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import systemAscenseur.Interface.ObserverArret;
 import systemAscenseur.Interface.ObserverNiveau;
 import systemAscenseur.Interface.ObserverSurcharge;
 
-public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
+public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau, ObserverArret{
 	/*
 	 * =========================================================== 
 	 * Attributs
@@ -50,7 +51,6 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	private JTextField txtVitesseMoteur;
 	private JLabel lblDistanceNiveaux;
 	private JTextField textDistanceNiveaux;
-	private static JLabel time;
 
 	private static Configurator configurateur;
 	private JLabel lblCoeff;
@@ -59,6 +59,8 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	private JTextField txtPoidsMax;
 	private JLabel lblTempsExec;
 	private JTextField txtTempsExec;
+	private JLabel lblEtat;
+	private JLabel lblEtatAscenseur;
 	/*
 	 * =========================================================== 
 	 * Constructeur
@@ -88,6 +90,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		contentPane.add(rightPanel);
 
 		lblEtageActuel = new JLabel("ETAGE ACTUEL");
+		lblEtageActuel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEtageActuel.setFont(new Font("Comic Sans MS", lblEtageActuel.getFont().getStyle() | Font.BOLD, 17));
 		lblEtageActuel.setForeground(new Color(255, 255, 255));
 
@@ -101,41 +104,52 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		lblSurcharge.setFont(new Font("Comic Sans MS", lblSurcharge.getFont().getStyle() | Font.BOLD, 22));
 		lblSurcharge.setForeground(new Color(255, 0, 0));
 
-		time = new JLabel("0");
-		time.setFont(new Font("Comic Sans MS", time.getFont().getStyle() & ~Font.BOLD, 15));
-		time.setForeground(new Color(0, 255, 127));
+		lblEtat = new JLabel(" ETAT ASCENSEUR");
+		lblEtat.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEtat.setFont(new Font("Comic Sans MS", lblEtat.getFont().getStyle() | Font.BOLD, 15));
+		lblEtat.setForeground(Color.WHITE);
+
+		lblEtatAscenseur = new JLabel("...");
+		lblEtatAscenseur.setFont(new Font("Comic Sans MS", lblEtatAscenseur.getFont().getStyle() | Font.BOLD, 24));
+		lblEtatAscenseur.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEtatAscenseur.setForeground(new Color(255, 215, 0));
 
 		GroupLayout gl_rightPanel = new GroupLayout(rightPanel);
 		gl_rightPanel.setHorizontalGroup(
-			gl_rightPanel.createParallelGroup(Alignment.LEADING)
+				gl_rightPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rightPanel.createSequentialGroup()
-					.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_rightPanel.createSequentialGroup()
-							.addGap(111)
-							.addGroup(gl_rightPanel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblNiveau, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblEtageActuel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGroup(gl_rightPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblSurcharge, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
-						.addGroup(gl_rightPanel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(time, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
+						.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_rightPanel.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(lblSurcharge, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
+								.addGroup(gl_rightPanel.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(lblEtat, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
+								.addGroup(gl_rightPanel.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblNiveau, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+												.addComponent(lblEtageActuel, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
+								.addGroup(gl_rightPanel.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(lblEtatAscenseur, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap())
+				);
 		gl_rightPanel.setVerticalGroup(
-			gl_rightPanel.createParallelGroup(Alignment.LEADING)
+				gl_rightPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rightPanel.createSequentialGroup()
-					.addGap(5)
-					.addComponent(lblEtageActuel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblNiveau)
-					.addPreferredGap(ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
-					.addComponent(lblSurcharge, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-					.addGap(68)
-					.addComponent(time, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
+						.addGap(5)
+						.addComponent(lblEtageActuel)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblNiveau)
+						.addGap(41)
+						.addComponent(lblEtat, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblEtatAscenseur, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+						.addComponent(lblSurcharge, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addGap(103))
+				);
 		rightPanel.setLayout(gl_rightPanel);
 
 		this.setContentPane(contentPane);
@@ -156,119 +170,120 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		lblDistanceNiveaux = new JLabel("Distance entre 2 niveaux (m) : ");
 
 		textDistanceNiveaux = new JTextField("3");
-		
+
 		lblCoeff = new JLabel("Coeff de temps :");
-		
+
 		txtCoeff = new JTextField("10");
-		
+
 		lblPoidsMax = new JLabel("Poids Max :");
-		
+
 		txtPoidsMax = new JTextField("5");
-		
+
 		lblTempsExec = new JLabel("Temps exec :");
-		
+
 		txtTempsExec = new JTextField("100000");
 		btnStart = new JButton("DEMARER");
-		
-				btnStart.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						try {
-							float coef = Float.parseFloat(txtCoeff.getText());
-							int distanceNiveaux = Integer.parseInt(textDistanceNiveaux.getText());
-							int etageMin = Integer.parseInt(txtEtageMin.getText());
-							int etageMax = Integer.parseInt(txtEtageMax.getText());
-							int poidsMax = Integer.parseInt(txtPoidsMax.getText());
-							long tempsExec = Long.parseLong(txtTempsExec.getText());
-							float vitesse = Float.parseFloat(txtVitesseMoteur.getText());
-							configurateur = new Configurator(0, coef, tempsExec, vitesse, etageMin, etageMax, poidsMax , distanceNiveaux, selectedFile.getName());
-							configurateur.addObserverNiveau(preview);
-		
-							t = new Thread(configurateur, "My Thread");
-							t.start();
-						} catch (Throwable e1) {e1.printStackTrace();}
-						
-					}
-				});
+
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					float coef = Float.parseFloat(txtCoeff.getText());
+					int distanceNiveaux = Integer.parseInt(textDistanceNiveaux.getText());
+					int etageMin = Integer.parseInt(txtEtageMin.getText());
+					int etageMax = Integer.parseInt(txtEtageMax.getText());
+					int poidsMax = Integer.parseInt(txtPoidsMax.getText());
+					long tempsExec = Long.parseLong(txtTempsExec.getText());
+					float vitesse = Float.parseFloat(txtVitesseMoteur.getText());
+					configurateur = new Configurator(0, coef, tempsExec, vitesse, etageMin, etageMax, poidsMax , distanceNiveaux, selectedFile.getName());
+					configurateur.addObserverNiveau(preview);
+					configurateur.addObserverArret(preview);
+					configurateur.addObserverSurcharge(preview);
+					t = new Thread(configurateur, "My Thread");
+					t.start();
+				} catch (Throwable e1) {e1.printStackTrace();}
+
+			}
+		});
 
 		//Positionnement des elements genere automatiquement		
 		GroupLayout gl_panel = new GroupLayout(leftPanel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+				gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblFichierDemandes)
-							.addPreferredGap(ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-							.addComponent(btnSelectFile))
-						.addComponent(fichierChoisi, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addContainerGap()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel.createSequentialGroup()
-									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-											.addComponent(btnStart)
-											.addComponent(lblTempsExec, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))
-										.addComponent(lblPoidsMax, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblCoeff, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblDistanceNiveaux, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED, 64, Short.MAX_VALUE))
-								.addComponent(lblNumeroEtageMin, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-								.addComponent(lblNumeroEtageMax, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-								.addComponent(lblVitesseMoteur))
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING, gl_panel.createParallelGroup(Alignment.TRAILING)
-									.addComponent(txtVitesseMoteur, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-									.addComponent(txtEtageMax, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-									.addComponent(txtEtageMin, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
-								.addGroup(Alignment.TRAILING, gl_panel.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(textDistanceNiveaux)
-									.addComponent(txtCoeff)
-									.addComponent(txtPoidsMax)
-									.addComponent(txtTempsExec, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)))))
-					.addContainerGap())
-		);
+										.addComponent(lblFichierDemandes)
+										.addPreferredGap(ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+										.addComponent(btnSelectFile))
+								.addComponent(fichierChoisi, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+								.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_panel.createSequentialGroup()
+														.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+																.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+																		.addComponent(btnStart)
+																		.addComponent(lblTempsExec, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))
+																.addComponent(lblPoidsMax, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+																.addComponent(lblCoeff, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+																.addComponent(lblDistanceNiveaux, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))
+														.addPreferredGap(ComponentPlacement.RELATED, 64, Short.MAX_VALUE))
+												.addComponent(lblNumeroEtageMin, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+												.addComponent(lblNumeroEtageMax, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+												.addComponent(lblVitesseMoteur))
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addGroup(Alignment.TRAILING, gl_panel.createParallelGroup(Alignment.TRAILING)
+														.addComponent(txtVitesseMoteur, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+														.addComponent(txtEtageMax, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+														.addComponent(txtEtageMin, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+												.addGroup(Alignment.TRAILING, gl_panel.createParallelGroup(Alignment.LEADING, false)
+														.addComponent(textDistanceNiveaux)
+														.addComponent(txtCoeff)
+														.addComponent(txtPoidsMax)
+														.addComponent(txtTempsExec, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)))))
+						.addContainerGap())
+				);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+				gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblFichierDemandes)
-						.addComponent(btnSelectFile))
-					.addGap(18)
-					.addComponent(fichierChoisi)
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtEtageMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNumeroEtageMin))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNumeroEtageMax)
-						.addComponent(txtEtageMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtVitesseMoteur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblVitesseMoteur))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textDistanceNiveaux, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDistanceNiveaux))
-					.addGap(8)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtCoeff, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCoeff))
-					.addGap(8)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtPoidsMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPoidsMax))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTempsExec)
-						.addComponent(txtTempsExec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(48)
-					.addComponent(btnStart)
-					.addContainerGap())
-		);
+						.addGap(5)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblFichierDemandes)
+								.addComponent(btnSelectFile))
+						.addGap(18)
+						.addComponent(fichierChoisi)
+						.addGap(18)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtEtageMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNumeroEtageMin))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNumeroEtageMax)
+								.addComponent(txtEtageMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtVitesseMoteur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblVitesseMoteur))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(textDistanceNiveaux, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDistanceNiveaux))
+						.addGap(8)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtCoeff, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCoeff))
+						.addGap(8)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtPoidsMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblPoidsMax))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblTempsExec)
+								.addComponent(txtTempsExec, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(48)
+						.addComponent(btnStart)
+						.addContainerGap())
+				);
 		leftPanel.setLayout(gl_panel);
 		/*
 		 * =========================================================== 
@@ -295,8 +310,13 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 	@Override
 	public void notifierNiveau(int niveau) {
 		this.lblNiveau.setText(niveau+ "");
-	}
+		this.lblEtatAscenseur.setText("");
 
+	}
+	@Override
+	public void notifierArret(int niveau) {
+		this.lblEtatAscenseur.setText("Arret");
+	}
 
 	@Override
 	public void notifierSurcharge() {
@@ -311,7 +331,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		preview = new Preview();
 		preview.setVisible(true);
 
-		
+
 	}
 }
 
