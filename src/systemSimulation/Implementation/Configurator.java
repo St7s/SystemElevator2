@@ -4,7 +4,9 @@ import interfaceUtilisateur.Interface.SystemIUFactory;
 import sequenceur.Interface.ISequencer;
 import sequenceur.Interface.SequenceurFactory;
 import systemAscenseur.Interface.ISystemAscenseur;
+import systemAscenseur.Interface.ObserverArret;
 import systemAscenseur.Interface.ObserverNiveau;
+import systemAscenseur.Interface.ObserverSurcharge;
 import systemControl.Interface.ISystemControl;
 import utilisateur.ObserverAppelUser;
 import utilisateur.ObserverDeplacementUser;
@@ -64,16 +66,16 @@ class Configurator {
 
 	public ISystemControl getSysControle() {return sysControle;}
 	public void setSysControle(ISystemControl sysControle) {this.sysControle = sysControle;}
-	
+
 	public Flow getFlow() {return flow;}
 	public void setFlow(Flow flow) {this.flow = flow;}
-	
+
 	public String getFlowFileName() {return flowFileName;}
 	public void setFlowFileName(String flowFileName) {this.flowFileName = flowFileName;}
-	
+
 	public IintefaceUtilisateur getUi() {return ui;}
 	public void setUi(IintefaceUtilisateur ui) {this.ui = ui;}
-	
+
 	public ISystemAscenseur getSa() {return sa;}
 	public void setSa(ISystemAscenseur sa) {this.sa = sa;}
 	/*
@@ -96,6 +98,43 @@ class Configurator {
 		this.flowFileName = "users";
 
 		this.flow = Flow.creatFlow();
+		//On cree le sequenceur
+		seq = SequenceurFactory.create(this.temps_execution, this.temps_debut, this.coefficient);
+
+		//On cree le systeme de controle
+		this.sysControle = systemControl.Interface.SystemControlFactory.create();
+
+		//On cree le systemeAscenseur
+		this.sa = systemAscenseur.Interface.SystemAscenseurFactory.create(this.vitesseMoteur, this.niveauMin, this.niveauMax, this.distanceNiveaux);
+
+		//On donne au systemControle l'interface pour commander le systemAscenseur
+		this.sysControle.link(this.sa);
+
+		seq.addProcess(this.sa,12);
+
+		this.ui = SystemIUFactory.createInstance();
+		this.ui.link(sysControle);
+
+		//On cree le Flow
+		this.flow = Flow.creatFlow();
+
+		//On initialise les utilisateurs systeme a partir d un fichier flow
+		this.flow.addFichier(this.flowFileName);
+
+		//On ratache l'interface Utilisateur aux utilisateurs
+		this.flow.addObserveurDeplacement((ObserverDeplacementUser) ui);
+
+		//On ratache l'interface Utilisateur aux utilisateurs
+		this.flow.addObserveurAppel((ObserverAppelUser) ui);
+
+		this.ui.addObserverArret(flow);
+		this.ui.addObserverSurcharge(flow);
+		//On demande au systemControle d'observer le niveau du systemAscenseur
+		this.sa.addObserverNiveau((ObserverNiveau) sysControle);
+		this.sa.addObserverNiveau(ui);
+		this.sa.addObserverArret(ui);
+		this.sa.addObserverSurcharge(ui);
+		seq.addProcess(flow,12);
 	}
 
 	/**
@@ -120,18 +159,6 @@ class Configurator {
 		this.distanceNiveaux = distanceNiveaux;
 		this.flowFileName = flowFileName;
 		this.flow = Flow.creatFlow();
-	}
-	/*
-	 * =========================================================== 
-	 * Methodes
-	 * ===========================================================
-	 */
-	public void demarer()throws Throwable{
-		/*
-		 * =========================================================== 
-		 * Creation des objets de la simulation
-		 * ===========================================================
-		 */
 
 		//On cree le sequenceur
 		seq = SequenceurFactory.create(this.temps_execution, this.temps_debut, this.coefficient);
@@ -170,10 +197,36 @@ class Configurator {
 		this.sa.addObserverArret(ui);
 		this.sa.addObserverSurcharge(ui);
 		seq.addProcess(flow,12);
+	}
+	/*
+	 * =========================================================== 
+	 * Methodes
+	 * ===========================================================
+	 */
+	public void demarer()throws Throwable{
+		/*
+		 * =========================================================== 
+		 * Creation des objets de la simulation
+		 * ===========================================================
+		 */
+
+
 		seq.start();
 		this.flow.tempDeplacementUser();
 		this.flow.temps_attente();
 		this.flow.temps_deplacement();
+	}
+
+	public void addObserverNiveau(ObserverNiveau obj){
+		this.sa.addObserverNiveau(obj);
+	}
+
+	public void addObserverArret(ObserverArret obj){
+		this.sa.addObserverArret(obj);
+	}
+
+	public void addObserverSurcharge(ObserverSurcharge obj){
+		this.sa.addObserverSurcharge(obj);
 	}
 
 	public static void main(String args[]) throws Throwable{

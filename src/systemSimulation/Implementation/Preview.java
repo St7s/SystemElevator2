@@ -3,8 +3,6 @@ package systemSimulation.Implementation;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.GroupLayout;
@@ -280,6 +278,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		preview.setVisible(true);
 
 		configurateur = new Configurator(0, 100, 100000, 1, 0, 10, 3, "users");
+		configurateur.addObserverNiveau(preview);
 	}
 }
 
