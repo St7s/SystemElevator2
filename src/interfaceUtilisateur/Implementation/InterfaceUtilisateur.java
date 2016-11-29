@@ -55,8 +55,6 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 	 * Methodes de classe 
 	 * ===========================================================
 	 */
-	
-	
 
 	public void monterAscenseur(){}
 
@@ -105,7 +103,7 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 
 	@Override
 	public void appel(int niveau, Sens sens) {
-		this.emettreAppel(sens, niveau);
+		this.systemeControle.appel(niveau, sens);
 	}
 
 	@Override
