@@ -23,8 +23,8 @@ class Configurator {
 		 */
 		/**Configuration du Sequenceur**/
 		long temps_debut = 0;
-		float coefficient_temps = 10;
-		long temps_execution = 50000;
+		float coefficient_temps = 100;
+		long temps_execution = 100000;
 
 		/**Configuration du SystemAscenseur**/
 		float vitesseMoteur = 1;
