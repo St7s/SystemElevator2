@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <package id="1" language="java" name="systemSimulation.Implementation" project="SystemElevator2" 
     file="/SystemElevator2/src/systemSimulation/Implementation" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="1403" width="851" x="-222" y="-250"/>    
+    <position height="1467" width="851" x="-222" y="-250"/>    
     <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="2" language="java" name="utilisateur" project="SystemElevator2" file="/SystemElevator2/src/utilisateur" 
@@ -13,7 +13,7 @@
   </package>  
   <class id="3" language="java" name="systemSimulation.Implementation.User" project="SystemElevator2" 
     file="/SystemElevator2/src/systemSimulation/Implementation/User.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="446" y="649"/>    
+    <position height="-1" width="-1" x="458" y="649"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -40,7 +40,7 @@
   </class>  
   <class id="6" language="java" name="systemSimulation.Implementation.Configurator" project="SystemElevator2" 
     file="/SystemElevator2/src/systemSimulation/Implementation/Configurator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-77" y="207"/>    
+    <position height="-1" width="-1" x="-75" y="241"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -103,179 +103,183 @@
   </interface>  
   <class id="13" language="java" name="systemSimulation.Implementation.Preview" project="SystemElevator2" 
     file="/SystemElevator2/src/systemSimulation/Implementation/Preview.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="168" y="874"/>    
+    <position height="-1" width="-1" x="195" y="888"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="14">    
-    <bendpoint x="253" y="233"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="15" name="usersAppel">        
+  <realization id="14">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="16">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="17" name="oa">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="16" minimum="0" maximum="2147483647">        
+      <multiplicity id="18" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="20" name="oa">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="23" name="od">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <bendpoint x="128" y="216"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="26" name="usersHappy">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="17">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="18" name="flow">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="19" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="20">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <association id="21">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="22" name="oa">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="23" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="24">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="25" name="oa">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="26" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
   <association id="28">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="29" name="configurateur"/>      
-      <multiplicity id="30" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="31">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="32" name="os">        
+      <attribute id="29" name="os">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="33" minimum="0" maximum="2147483647">        
+      <multiplicity id="30" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="34">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="8"/>  
-  </realization>  
-  <association id="35">    
-    <bendpoint x="128" y="216"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="36" name="usersHappy">        
+  <association id="31">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="32" name="flow">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="37" minimum="0" maximum="2147483647">        
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="35" name="od">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="36" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <bendpoint x="376" y="314"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="38" name="usersInAscenseur">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="38">    
+  <generalization id="40">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="41">    
     <bendpoint x="322" y="271"/>    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="39" name="users">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="40" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="41">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="42" name="oe">        
+      <attribute id="42" name="users">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="43" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="44">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="45" name="od">        
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="45" name="oe">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="46" minimum="0" maximum="1">        
+      <multiplicity id="46" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="47">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="48" name="od">        
+    <bendpoint x="253" y="233"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="48" name="usersAppel">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="49" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="50">    
-    <bendpoint x="376" y="314"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="51" name="usersInAscenseur">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="52" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="53">    
+  <association id="50">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="54" name="instance_Flow">        
+      <attribute id="51" name="instance_Flow">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="55" minimum="0" maximum="1">        
+      <multiplicity id="52" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="53">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="54" name="configurateur">        
+        <position height="0" width="0" x="2" y="34"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
+        <position height="0" width="0" x="2" y="34"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
