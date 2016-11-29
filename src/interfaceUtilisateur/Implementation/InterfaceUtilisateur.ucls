@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.11" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="interfaceUtilisateur.Implementation" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Implementation" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="640" width="328" x="27" y="14"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="interfaceUtilisateur.Interface" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="591" width="619" x="397" y="19"/>    
+    <display autosize="false" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="3" language="java" name="interfaceUtilisateur.Implementation.SystemIUFactoryImp" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Implementation/SystemIUFactoryImp.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="192" y="109"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="interfaceUtilisateur.Implementation.InterfaceUtilisateur" 
+    project="SystemElevator2" file="/SystemElevator2/src/interfaceUtilisateur/Implementation/InterfaceUtilisateur.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="181" y="425"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="interfaceUtilisateur.Interface.UserInterface" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface/UserInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="495" y="131"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="interfaceUtilisateur.Interface.ObservableIU" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface/ObservableIU.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="788" y="156"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="interfaceUtilisateur.Interface.SystemIUFactory" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface/SystemIUFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="839" y="465"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="8" language="java" name="interfaceUtilisateur.Interface.IintefaceUtilisateur" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface/IintefaceUtilisateur.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="750" y="323"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="interfaceUtilisateur.Interface.ObserverArretIU" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface/ObserverArretIU.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="566" y="529"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="interfaceUtilisateur.Interface.ObserverSurchargeIU" project="SystemElevator2" 
+    file="/SystemElevator2/src/interfaceUtilisateur/Interface/ObserverSurchargeIU.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="633" y="407"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <generalization id="11">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="12">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="13" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="15">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="16" name="observeursArret">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="18">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="19" name="observeursSurcharge">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="20" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <realization id="22">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
