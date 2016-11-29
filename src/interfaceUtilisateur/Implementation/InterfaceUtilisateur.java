@@ -66,6 +66,8 @@ public class InterfaceUtilisateur implements IintefaceUtilisateur {
 
 	@Override
 	public void notifierNiveau(int niveau) {
+		if(this.display_pos == niveau)return;
+		this.display_pos = niveau;
 		System.out.println("IU >> L'ascenseur est au Niveau : " + niveau);
 	}
 

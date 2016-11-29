@@ -98,11 +98,15 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 			return tempsDeplacement;
 		}
 	}
-	public void tempDeplacementUser()
-	{
+	public void tempDeplacementUser(){
+		System.out.println("============================================================================");
+		System.out.println("================== Temps deplacement des utilisateurs ======================");
+		System.out.println("============================================================================");
 		for (UserSimulation user : usersHappy) {
 			System.out.println("Nom : "+user.nom+" Temps Sortie : "+ (user.getTempsSortie()- user.getTempsEntre()) + " Temps Attentes "+(user.getTempsEntre() - user.getTempsAppel()));
 		}
+		System.out.println("============================================================================");
+
 	}
 	public void addUser(UserSimulation user)
 	{

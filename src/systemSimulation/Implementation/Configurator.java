@@ -233,11 +233,11 @@ class Configurator implements Runnable{
 	public void addObserverSurcharge(ObserverSurcharge obj){
 		this.sa.addObserverSurcharge(obj);
 	}
-/*
+
 	public static void main(String args[]) throws Throwable{
-		Configurator c = new Configurator(0, 100, 100000, 1, 0, 10, 3, "users");
+		Configurator c = new Configurator(0, 100, 100000, 1, 0, 10, 5, 3, "users");
 		c.demarer();
-	} */
+	} 
 	@Override
 	public void run() {
 		try {
