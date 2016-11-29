@@ -183,9 +183,9 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 			usersAppel.add(usr1);
 			users.remove(usr1);			
 		}
-		else {
+		/*else {
 			System.out.println("aucun utilisateur dans l'ascenseur ");
-		}
+		}*/
 	}
 
 	/**
