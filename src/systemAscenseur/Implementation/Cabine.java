@@ -61,7 +61,7 @@ class Cabine implements IU_SA {
 	 * 
 	 */
 	public void finMouvement() {
-		// TODO Auto-generated method
+		this.etat = EtatCabine.FERME;
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Cabine implements IU_SA {
 	 * @param vitesse
 	 */
 	public void miseEnMouvement(float vitesse) {
-		// TODO Auto-generated method
+		this.etat = EtatCabine.MOUVEMENT;
 	}
 	
 	/**

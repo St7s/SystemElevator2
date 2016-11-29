@@ -140,7 +140,7 @@ class Configurator {
 	/**
 	 * Constructeurs avec tout les parametres
 	 * @param temps_debut
-	 * @param coefficient_temps
+	 * @param coefficient
 	 * @param temps_execution
 	 * @param vitesseMoteur
 	 * @param niveauMin
@@ -148,9 +148,9 @@ class Configurator {
 	 * @param distanceNiveaux
 	 * @param flowFileName 
 	 */
-	public Configurator(long temps_debut, float coefficient_temps, long temps_execution, float vitesseMoteur, int niveauMin, int niveauMax, float distanceNiveaux, String flowFileName) throws Throwable{
+	public Configurator(long temps_debut, float coefficient, long temps_execution, float vitesseMoteur, int niveauMin, int niveauMax, float distanceNiveaux, String flowFileName) throws Throwable{
 		this.temps_debut = temps_debut;
-		this.coefficient = coefficient_temps;
+		this.coefficient = coefficient;
 		this.temps_execution = temps_execution;
 
 		this.vitesseMoteur = vitesseMoteur;

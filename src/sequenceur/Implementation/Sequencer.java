@@ -109,7 +109,6 @@ import sequenceur.Interface.ISequencer;
 	}
 	@Override
 	public long SimulationTime() {
-		// TODO Auto-generated method stub
 		return simulationTime;
 	}
 

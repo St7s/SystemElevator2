@@ -277,7 +277,7 @@ public class Preview extends JFrame implements ObserverSurcharge,ObserverNiveau{
 		preview = new Preview();
 		preview.setVisible(true);
 
-		configurateur = new Configurator(0, 100, 100000, 1, 0, 10, 3, "users");
+		configurateur = new Configurator(0, 1, 100000, 1, 0, 10, 3, "users");
 		configurateur.addObserverNiveau(preview);
 	}
 }

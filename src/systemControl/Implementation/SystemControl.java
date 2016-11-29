@@ -213,13 +213,10 @@ class SystemControl implements ISystemControl{
 			Depiler();
 		}
 		else if(temp.niveau<niveau)
-		{
 			systemAscenseur.commande(Sens.DOWN);
-		}
 		else
-		{
 			systemAscenseur.commande(Sens.UP);
-		}
+		
 
 	}
 	/**
