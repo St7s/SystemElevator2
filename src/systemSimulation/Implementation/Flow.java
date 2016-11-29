@@ -195,7 +195,7 @@ class Flow implements ObserverArretIU,ObserverSurchargeIU, Event {
 	public void arret(int niveau) {
 		ArrayList<UserSimulation> supphap = new ArrayList<UserSimulation>();
 		// a changer
-		long t = Configurator.seq.SimulationTime();
+		long t = Configurator.getSeq().SimulationTime();
 		//
 		for (UserSimulation in : usersInAscenseur) {
 			if (in.niveau_final == niveau) {

@@ -11,26 +11,122 @@ import utilisateur.ObserverDeplacementUser;
 
 class Configurator {
 
-	static ISequencer seq;
-	/**
-	 * 
+	/*
+	 * =========================================================== 
+	 * Attributs
+	 * ===========================================================
 	 */
-	public static void main(String args[]) throws Throwable{
-		/*
-		 * =========================================================== 
-		 * Valeurs Config
-		 * ===========================================================
-		 */
-		/**Configuration du Sequenceur**/
-		long temps_debut = 0;
-		float coefficient_temps = 100;
-		long temps_execution = 100000;
+	protected static ISequencer seq;
+	/**Configuration du Sequenceur**/
+	protected long temps_debut;
+	protected float coefficient;
+	protected long temps_execution;
 
-		/**Configuration du SystemAscenseur**/
-		float vitesseMoteur = 1;
-		int niveauMin = 0;
-		int niveauMax = 10;
-		float distanceNiveaux = 3;
+	/**Configuration du SystemAscenseur**/
+	protected float vitesseMoteur;
+	protected int niveauMin;
+	protected int niveauMax;
+	protected float distanceNiveaux;
+
+	protected ISystemControl sysControle;
+	protected Flow flow;
+	protected String flowFileName;
+	protected ISystemAscenseur sa;
+	protected IintefaceUtilisateur ui;
+	/*
+	 * =========================================================== 
+	 * Getters - Setters 
+	 * ===========================================================
+	 */
+	public static ISequencer getSeq() {return seq;}
+	public static void setSeq(ISequencer seq) {Configurator.seq = seq;}
+
+	public long getTemps_debut() {return temps_debut;}
+	public void setTemps_debut(long temps_debut) {this.temps_debut = temps_debut;}
+
+	public float getCoefficient() {return coefficient;}
+	public void setCoefficient(float coefficient) {this.coefficient = coefficient;}
+
+	public long getTemps_execution() {return temps_execution;}
+	public void setTemps_execution(long temps_execution) {this.temps_execution = temps_execution;}
+
+	public float getVitesseMoteur() {return vitesseMoteur;}
+	public void setVitesseMoteur(float vitesseMoteur) {this.vitesseMoteur = vitesseMoteur;}
+
+	public int getNiveauMin() {return niveauMin;}
+	public void setNiveauMin(int niveauMin) {this.niveauMin = niveauMin;}
+
+	public int getNiveauMax() {return niveauMax;}
+	public void setNiveauMax(int niveauMax) {this.niveauMax = niveauMax;}
+
+	public float getDistanceNiveaux() {return distanceNiveaux;}
+	public void setDistanceNiveaux(float distanceNiveaux) {this.distanceNiveaux = distanceNiveaux;}
+
+	public ISystemControl getSysControle() {return sysControle;}
+	public void setSysControle(ISystemControl sysControle) {this.sysControle = sysControle;}
+	
+	public Flow getFlow() {return flow;}
+	public void setFlow(Flow flow) {this.flow = flow;}
+	
+	public String getFlowFileName() {return flowFileName;}
+	public void setFlowFileName(String flowFileName) {this.flowFileName = flowFileName;}
+	
+	public IintefaceUtilisateur getUi() {return ui;}
+	public void setUi(IintefaceUtilisateur ui) {this.ui = ui;}
+	
+	public ISystemAscenseur getSa() {return sa;}
+	public void setSa(ISystemAscenseur sa) {this.sa = sa;}
+	/*
+	 * =========================================================== 
+	 * Construcuteurs
+	 * ===========================================================
+	 */
+	/**
+	 * Constructeur par defaut
+	 */
+	public Configurator() throws Throwable{
+		this.temps_debut = 0;
+		this.coefficient = 100;
+		this.temps_execution = 100000;
+
+		this.vitesseMoteur = 1;
+		this.niveauMin = 0;
+		this.niveauMax = 10;
+		this.distanceNiveaux = 3;
+		this.flowFileName = "users";
+
+		this.flow = Flow.creatFlow();
+	}
+
+	/**
+	 * Constructeurs avec tout les parametres
+	 * @param temps_debut
+	 * @param coefficient_temps
+	 * @param temps_execution
+	 * @param vitesseMoteur
+	 * @param niveauMin
+	 * @param niveauMax
+	 * @param distanceNiveaux
+	 * @param flowFileName 
+	 */
+	public Configurator(long temps_debut, float coefficient_temps, long temps_execution, float vitesseMoteur, int niveauMin, int niveauMax, float distanceNiveaux, String flowFileName) throws Throwable{
+		this.temps_debut = temps_debut;
+		this.coefficient = coefficient_temps;
+		this.temps_execution = temps_execution;
+
+		this.vitesseMoteur = vitesseMoteur;
+		this.niveauMin = niveauMin;
+		this.niveauMax = niveauMax;
+		this.distanceNiveaux = distanceNiveaux;
+		this.flowFileName = flowFileName;
+		this.flow = Flow.creatFlow();
+	}
+	/*
+	 * =========================================================== 
+	 * Methodes
+	 * ===========================================================
+	 */
+	public void demarer()throws Throwable{
 		/*
 		 * =========================================================== 
 		 * Creation des objets de la simulation
@@ -38,46 +134,51 @@ class Configurator {
 		 */
 
 		//On cree le sequenceur
-		seq = SequenceurFactory.create(temps_execution, temps_debut, coefficient_temps);
+		seq = SequenceurFactory.create(this.temps_execution, this.temps_debut, this.coefficient);
 
 		//On cree le systeme de controle
-		ISystemControl sysControle = systemControl.Interface.SystemControlFactory.create();
+		this.sysControle = systemControl.Interface.SystemControlFactory.create();
 
 		//On cree le systemeAscenseur
-		ISystemAscenseur sa = systemAscenseur.Interface.SystemAscenseurFactory.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux);
+		this.sa = systemAscenseur.Interface.SystemAscenseurFactory.create(this.vitesseMoteur, this.niveauMin, this.niveauMax, this.distanceNiveaux);
 
 		//On donne au systemControle l'interface pour commander le systemAscenseur
-		sysControle.link(sa);
+		this.sysControle.link(this.sa);
 
-		seq.addProcess(sa,12);
+		seq.addProcess(this.sa,12);
 
-		IintefaceUtilisateur ui = SystemIUFactory.createInstance();
-		ui.link(sysControle);
+		this.ui = SystemIUFactory.createInstance();
+		this.ui.link(sysControle);
+
 		//On cree le Flow
-		Flow flow = Flow.creatFlow();
-		
-		//On initialise les utilisateurs systeme a partir d un fichier flow
-		flow.addFichier("users");
-		
-		//On ratache l'interface Utilisateur aux utilisateurs
-		flow.addObserveurDeplacement((ObserverDeplacementUser) ui);
-		
-		//On ratache l'interface Utilisateur aux utilisateurs
-		flow.addObserveurAppel((ObserverAppelUser) ui);
+		this.flow = Flow.creatFlow();
 
-		ui.addObserverArret(flow);
-		ui.addObserverSurcharge(flow);
+		//On initialise les utilisateurs systeme a partir d un fichier flow
+		this.flow.addFichier(this.flowFileName);
+
+		//On ratache l'interface Utilisateur aux utilisateurs
+		this.flow.addObserveurDeplacement((ObserverDeplacementUser) ui);
+
+		//On ratache l'interface Utilisateur aux utilisateurs
+		this.flow.addObserveurAppel((ObserverAppelUser) ui);
+
+		this.ui.addObserverArret(flow);
+		this.ui.addObserverSurcharge(flow);
 		//On demande au systemControle d'observer le niveau du systemAscenseur
-		sa.addObserverNiveau((ObserverNiveau) sysControle);
-		sa.addObserverNiveau(ui);
-		sa.addObserverArret(ui);
-		sa.addObserverSurcharge(ui);
+		this.sa.addObserverNiveau((ObserverNiveau) sysControle);
+		this.sa.addObserverNiveau(ui);
+		this.sa.addObserverArret(ui);
+		this.sa.addObserverSurcharge(ui);
 		seq.addProcess(flow,12);
 		seq.start();
-		flow.tempDeplacementUser();
-		flow.temps_attente();
-		flow.temps_deplacement();
+		this.flow.tempDeplacementUser();
+		this.flow.temps_attente();
+		this.flow.temps_deplacement();
+	}
 
+	public static void main(String args[]) throws Throwable{
+		Configurator c = new Configurator(0, 100, 100000, 1, 0, 10, 3, "users");
+		c.demarer();
 	} 
 
 }
