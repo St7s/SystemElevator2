@@ -11,7 +11,7 @@ import systemControl.Interface.ISystemControl;
 import utilisateur.ObserverAppelUser;
 import utilisateur.ObserverDeplacementUser;
 
-class Configurator {
+class Configurator implements Runnable{
 
 	/*
 	 * =========================================================== 
@@ -35,6 +35,7 @@ class Configurator {
 	protected String flowFileName;
 	protected ISystemAscenseur sa;
 	protected IintefaceUtilisateur ui;
+	private int poidsMax;
 	/*
 	 * =========================================================== 
 	 * Getters - Setters 
@@ -64,6 +65,8 @@ class Configurator {
 	public float getDistanceNiveaux() {return distanceNiveaux;}
 	public void setDistanceNiveaux(float distanceNiveaux) {this.distanceNiveaux = distanceNiveaux;}
 
+	public int getPoidsMax() {return poidsMax;}
+	public void setPoidsMax(int poidMax) {this.poidsMax = poidMax;}
 	public ISystemControl getSysControle() {return sysControle;}
 	public void setSysControle(ISystemControl sysControle) {this.sysControle = sysControle;}
 
@@ -94,6 +97,7 @@ class Configurator {
 		this.vitesseMoteur = 1;
 		this.niveauMin = 0;
 		this.niveauMax = 10;
+		this.poidsMax = 5;
 		this.distanceNiveaux = 3;
 		this.flowFileName = "users";
 
@@ -105,7 +109,7 @@ class Configurator {
 		this.sysControle = systemControl.Interface.SystemControlFactory.create();
 
 		//On cree le systemeAscenseur
-		this.sa = systemAscenseur.Interface.SystemAscenseurFactory.create(this.vitesseMoteur, this.niveauMin, this.niveauMax, this.distanceNiveaux);
+		this.sa = systemAscenseur.Interface.SystemAscenseurFactory.create(this.vitesseMoteur, this.niveauMin, this.niveauMax, this.distanceNiveaux, this.poidsMax);
 
 		//On donne au systemControle l'interface pour commander le systemAscenseur
 		this.sysControle.link(this.sa);
@@ -148,7 +152,7 @@ class Configurator {
 	 * @param distanceNiveaux
 	 * @param flowFileName 
 	 */
-	public Configurator(long temps_debut, float coefficient, long temps_execution, float vitesseMoteur, int niveauMin, int niveauMax, float distanceNiveaux, String flowFileName) throws Throwable{
+	public Configurator(long temps_debut, float coefficient, long temps_execution, float vitesseMoteur, int niveauMin, int niveauMax, int poidsMax, float distanceNiveaux, String flowFileName) throws Throwable{
 		this.temps_debut = temps_debut;
 		this.coefficient = coefficient;
 		this.temps_execution = temps_execution;
@@ -156,6 +160,7 @@ class Configurator {
 		this.vitesseMoteur = vitesseMoteur;
 		this.niveauMin = niveauMin;
 		this.niveauMax = niveauMax;
+		this.poidsMax = poidsMax;
 		this.distanceNiveaux = distanceNiveaux;
 		this.flowFileName = flowFileName;
 		this.flow = Flow.creatFlow();
@@ -167,7 +172,7 @@ class Configurator {
 		this.sysControle = systemControl.Interface.SystemControlFactory.create();
 
 		//On cree le systemeAscenseur
-		this.sa = systemAscenseur.Interface.SystemAscenseurFactory.create(this.vitesseMoteur, this.niveauMin, this.niveauMax, this.distanceNiveaux);
+		this.sa = systemAscenseur.Interface.SystemAscenseurFactory.create(this.vitesseMoteur, this.niveauMin, this.niveauMax, this.distanceNiveaux, this.poidsMax);
 
 		//On donne au systemControle l'interface pour commander le systemAscenseur
 		this.sysControle.link(this.sa);
@@ -228,10 +233,19 @@ class Configurator {
 	public void addObserverSurcharge(ObserverSurcharge obj){
 		this.sa.addObserverSurcharge(obj);
 	}
-
+/*
 	public static void main(String args[]) throws Throwable{
 		Configurator c = new Configurator(0, 100, 100000, 1, 0, 10, 3, "users");
 		c.demarer();
-	} 
+	} */
+	@Override
+	public void run() {
+		try {
+			this.demarer();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

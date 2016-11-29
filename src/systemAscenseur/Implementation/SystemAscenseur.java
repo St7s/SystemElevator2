@@ -83,7 +83,7 @@ public class SystemAscenseur extends SystemAscenseurFactory implements ISystemAs
 	 * @param moteur
 	 * @param capteurNiveau
 	 */
-	public SystemAscenseur(int niveauMin, int niveauMax, float distanceNiveaux, Moteur moteur, CapteurNiveau capteurNiveau) {
+	public SystemAscenseur(int niveauMin, int niveauMax, float distanceNiveaux, Moteur moteur, CapteurNiveau capteurNiveau, int poidsMax) {
 		this.niveauMin = niveauMin;
 		this.niveauMax = niveauMax;
 		this.position = 0;

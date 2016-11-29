@@ -15,9 +15,10 @@ public class SystemAscenseurFactory {
 	 * @param vitesseMoteur
 	 * @param niveauMax
 	 * @param niveauMin
+	 * @param poidsMax 
 	 */
-	public static ISystemAscenseur create(float vitesseMoteur, int niveauMin, int niveauMax, float distanceNiveaux) {
-		return SystemeAscenseurFactoryEmp.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux);
+	public static ISystemAscenseur create(float vitesseMoteur, int niveauMin, int niveauMax, float distanceNiveaux, int poidsMax) {
+		return SystemeAscenseurFactoryEmp.create(vitesseMoteur, niveauMin, niveauMax, distanceNiveaux, poidsMax);
 	}
 
 }
